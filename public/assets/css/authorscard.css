@@ -1,0 +1,62 @@
+
+.authors-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0;
+    padding: 20px;
+}
+
+.authors-card {
+    position: relative;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 0 1 calc(33.33% - 20px); /* Adjust the width as needed */
+   
+}
+.authors-card:hover{
+    position: relative;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 0 1 calc(33.33% - 20px); /* Adjust the width as needed */
+    background-color: #45a049;
+    color:white
+}
+
+
+.authors-card h3 {
+    margin-top: 0;
+}
+
+.authors-card p {
+    margin-bottom: 8px;
+}
+
+.authors-card-actions {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+.authors-card-actions button {
+    background-color: black;
+    color: #ffffff;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.authors-card-actions button:hover {
+    background-color: white;
+    color: black;
+}

@@ -1,0 +1,50 @@
+.user-center {
+    margin-left: 10%;
+    margin-top: 2%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 20px;
+}
+
+.user-form-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+}
+
+.user-form-group label {
+    margin-bottom: 5px;
+}
+
+.user-form-group input[type="text"],
+.user-form-group input[type="email"],
+.user-form-group select {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.user-img {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.user-radio-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-radio-group label {
+    margin-right: 20px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-left: 40%;
+}

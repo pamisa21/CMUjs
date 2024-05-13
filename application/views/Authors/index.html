@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="public/assets/css/users.css"> -->
+    <link rel="stylesheet" href="<?php echo base_url('public/assets/css/users.css'); ?>">
+    <title>Evuator</title>
+   
+</head>
+<body>
+    <div id="greeting-container">
+        <div id="emoji">👋</div>
+        <p>Hi, Author!</p>
+        <button onclick="redirecttoUserHome()">Get Started!</button>
+    </div>
+</body>
+<script>
+    function redirecttoUserHome() {
+
+        window.location.href = 'Authors/dashboard';
+    }
+</script>
+</html>

@@ -1,0 +1,85 @@
+
+  body {
+    /* font-family: 'Glyphicons Halflings'; */
+    background-color: #f4f4f4;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+
+  .title {
+    color:#138143;
+    position: absolute;
+    top: 10px;
+    text-align: left;
+    left: 28rem;
+
+    font-weight: 500;
+  }
+  
+  h2 {
+    font-size: 30px;
+    font-weight:bold;
+  }
+  
+  h4 {
+    font-size: 11px;
+  }
+  .cardcontainer {
+      display: flex;
+      justify-content: flex-start; 
+      left: 15rem;
+      width: 100%; 
+      position: relative;
+    }
+    .card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    margin-left: 15px;
+    padding: 20px;
+    width: 320px;
+    height: 170px;
+    text-align: center;
+    position: relative;
+    top:10rem;
+  }
+
+  .card-title {
+    font-size: 18Px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: Quattrocento, serif;
+    margin-top: 10px;
+  }
+
+  .card-content {
+    font-size: 25px;
+    color: #272927;
+    margin-top: 10px;
+    font-family: Quattrocento, serif;
+    font-weight: bold;
+  } 
+  .card-content > p {
+    font-size: 12px;
+}
+/* .card:nth-child(1) {
+    background: linear-gradient(279deg, #f5f1f1, #b57c7c);
+  }
+  
+  .card:nth-child(2) {
+    background: linear-gradient(250deg, #acf0f0, #788184);
+
+  }
+  
+  .card:nth-child(3) {
+    background: linear-gradient(104deg, #dcd9d0, #57d63b);
+}
+   */

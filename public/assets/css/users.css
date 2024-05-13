@@ -1,0 +1,37 @@
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #greeting-container {
+            text-align: center;
+            
+        }
+        button{
+            color:blue;
+            width: 140px;
+            height: 40px;
+            background-color: azure;
+            border-radius: 10px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 15px;
+        }
+        button:hover {
+            background-color: blue;
+            color: #000;
+        }
+
+        #emoji {
+            font-size: 15em;
+        }
+        p{
+            font-size: 3em;
+        }
+        
