@@ -196,6 +196,7 @@
         </div>
     </div>
 </div>
+
 <div id="edituserModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeedituserModal()">&times;</span>

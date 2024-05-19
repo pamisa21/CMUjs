@@ -337,93 +337,85 @@ h4{
 
 <div class="content">
     <div class="title">
-    <h2>Assign Article</h2>
-    <h4>April 30, 2024</h4>
-     </div>
-    <div class="column column-1" >
-    <?php
-      foreach ($articles as $article):
-        if ($article['published'] == 0): 
-            ?>
-            <div class="card">
-                <div class="profile">
-                    <img class="author-img" src="/public/assets/images/767.jpg" alt="Author Profile Image">
-                    <div class="author-info">
-                        <p class="author-name"><?php echo $article['auid']; ?></p>
-                        <p class="author-position" style="margin-top:-2px">Faculty</p>
-                    </div>
-                </div>
-    
-                <div class="images">
-                    <img src="/public/assets/images/767.jpg" alt="Article Image">
-                </div> <!-- Fixed closing tag for the div "images" -->
-                <div class="articlebio">
-                    <p class="Title"><?php echo $article['title']; ?></p>
-                    <p class="subtitle">SubTitle</p>
-                    <p class="description"><?php echo $article['keywords']; ?></p>
-                    <div class="buttoninfo">
-                        <button class="viewinfo">View Info?</button>
-                        <button class="viewmore">View More?</button>
-                        <button class="viewcheck"   onclick="openModal()">Check</button>
- 
-                      
-                        
-                    </div>
-                </div>
-            </div>
-            <?php
-        endif;
-    endforeach;
-    
-            ?>
+        <h2>Assign Article</h2>
+        <h4>April 30, 2024</h4>
     </div>
-    
+    <div class="column column-1">
+        <?php foreach ($articles as $article): ?>
+            <?php if ($article['published'] == 0): ?>
+                <div class="card">
+                    <div class="profile">
+                        <img class="author-img" src="/public/assets/images/767.jpg" alt="Author Profile Image">
+                        <div class="author-info">
+                            <p class="author-name"><?php echo htmlspecialchars($article['complete_name']); ?></p>
+                            <p class="author-position" style="margin-top:-2px">Faculty</p>
+                        </div>
+                    </div>
+
+                    <div class="images">
+                        <img src="/public/assets/images/767.jpg" alt="Article Image">
+                    </div>
+                    <div class="articlebio">
+                        <p class="Title"><?php echo htmlspecialchars($article['title']); ?></p>
+                        <p class="subtitle">SubTitle</p>
+                        <p class="description"><?php echo htmlspecialchars($article['keywords']); ?></p>
+                        <div class="buttoninfo">
+                            <button class="viewinfo">View Info?</button>
+                            <button class="viewmore">View More?</button>
+                            <button class="viewcheck" onclick="openModal()">Check</button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+
     <div class="column column-2 small-volume">
-        <h3 class="aricleLabel"> List of Assign Article</h3>
+        <h3 class="aricleLabel">List of Assign Articles</h3>
         <div class="volume">
             <div class="volumearticle">
-              <h4> Pendings</h4>
-              <ul class="articlelist">
-              <?php foreach ($articles as $article): ?>
-                      <?php if ($article['published'] == 0 && $article['userid'] == 1): ?>
-                              <li onclick="showArticle('<?php echo $article['title']; ?>')">
-                                  <span class="icon-volume"></span> <?php echo $article['title']; ?>
-                              </li>
-                          <?php endif; ?>
-                      <?php endforeach; ?>
-              </ul> 
-            </div>
-            <div class="volumearticle">
-              <h4> Published </h4>
-              <ul class="articlelist">
-              <?php foreach ($articles as $article): ?>
-                      <?php if ($article['published'] == 1 && $article['userid'] == 1): ?>
-                              <li onclick="showArticle('<?php echo $article['title']; ?>')">
-                                  <span class="icon-volume"></span> <?php echo $article['title']; ?>
-                              </li>
-                          <?php endif; ?>
-                      <?php endforeach; ?>
-              </ul> 
-            </div>
-            <div class="volumearticle">
-              <h4> Rejected </h4>
-              <ul class="articlelist">
-              <?php foreach ($articles as $article): ?>
-                          <?php if ($article['published'] == 3 && $article['userid'] == 1): ?>
-                              <li onclick="showArticle('<?php echo $article['title']; ?>')">
-                                  <span class="icon-volume"></span> <?php echo $article['title']; ?>
-                              </li>
-                          <?php endif; ?>
-                      <?php endforeach; ?>
-              </ul> 
-            </div>
-        </div>
-    </div>
-</div>
-
+                <h4>Pendings</h4>
+                <ul class="articlelist">
+                    <?php foreach ($articles as $article): ?>
+                        <?php if ($article['published'] == 0 && $article['userid'] == 1): ?>
+                               <li onclick="showArticle('<?php echo htmlspecialchars($article['title']); ?>')">
+                                   <span class="icon-volume"></span> <?php echo htmlspecialchars($article['title']); ?>
+                               </li>
+                           <?php endif; ?>
+                       <?php endforeach; ?>
+                   </ul>
+               </div>
+               <div class="volumearticle">
+                   <h4>Published</h4>
+                   <ul class="articlelist">
+                       <?php foreach ($articles as $article): ?>
+                           <?php if ($article['published'] == 1 && $article['userid'] == 1): ?>
+                               <li onclick="showArticle('<?php echo htmlspecialchars($article['title']); ?>')">
+                                   <span class="icon-volume"></span> <?php echo htmlspecialchars($article['title']); ?>
+                               </li>
+                           <?php endif; ?>
+                       <?php endforeach; ?>
+                   </ul>
+               </div>
+               <div class="volumearticle">
+                   <h4>Rejected</h4>
+                   <ul class="articlelist">
+                       <?php foreach ($articles as $article): ?>
+                           <?php if ($article['published'] == 3 && $article['userid'] == 1): ?>
+                               <li onclick="showArticle('<?php echo htmlspecialchars($article['title']); ?>')">
+                                   <span class="icon-volume"></span> <?php echo htmlspecialchars($article['title']); ?>
+                               </li>
+                           <?php endif; ?>
+                       <?php endforeach; ?>
+                   </ul>
+               </div>
+           </div>
+       </div>
+   </div>
 
 
 </body>
+
 <div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>

@@ -201,7 +201,7 @@ z-index: 0;
 </style>
 <body>
     <body>
-
+ 
 <div class="container">
   <div class="title">
     <h2>Author Information</h2>
@@ -214,7 +214,7 @@ z-index: 0;
       </div>
       <div class="profile">
         <!-- Displaying author's name -->
-        <h2 class="name"><?php echo $authors['author_name']; ?></h2>
+        <h2 class="name"><?php echo $authors['complete_name']; ?></h2>
         <!-- Displaying author's location -->
         <h3 class="locationname"><i class="fas fa-map-marker-alt"></i> <?php echo $authors['address']; ?></h3>
         <!-- Displaying author's email -->

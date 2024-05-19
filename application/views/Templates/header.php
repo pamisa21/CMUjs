@@ -118,7 +118,7 @@
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+            z-index: 1; 
             left: 0;
             top: 0;
             width: 100%; /* Full width */
@@ -178,6 +178,17 @@
                 font-family: Quattrocento;
                 
             }
+            
+            .input-group select {
+                width: 94%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-left: 10px;
+                margin-right: 10px;
+                font-family: Quattrocento;
+                
+            }
 
             .save-button {
             background-color: #138143;
@@ -209,7 +220,11 @@
                 color: red;
                 font-weight: regular;
             }
-
+            .Usertype {
+                margin-top: 20px;
+                justify-content: center;
+            }
+      
     </style>
 </head>
 <body>
@@ -235,50 +250,142 @@
     </div>
 </nav>
 
+
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">&times;</span>
-        <!-- Your login form content here -->
-        <h2>Login</h2>
+        <h2>Login as:</h2>
+        <div class="Usertype">
+            <input type="radio" id="author" name="user_type" value="author" onchange="openModal('authorLoginModal')" required>
+            <label for="author">User</label>
+            
+            <input type="radio" id="evaluator" name="user_type" value="evaluator" onchange="openModal('evaluatorLoginModal')" required>
+            <label for="evaluator">Evaluator</label>
+        </div>
+    </div>
+</div>
+
+
+<div id="authorLoginModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('authorLoginModal')">&times;</span>
+        <h2>Login as User</h2>
         <form action="./users" method="POST">
             <div class="input-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <label for="authorEmail">Email:</label>
+                <input type="email" id="authorEmail" name="email" required>
             </div>
             <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="authorPassword">Password:</label>
+                <input type="password" id="authorPassword" name="password" required>
             </div>
             <div class="forgot">
-                <h4>Forget Password</h4>
+                <h4>Forgot Password</h4>
             </div>
             <button type="submit" class="save-button">Login</button>
         </form>
     </div>
 </div>
 
-<div id="registerModal" class="modal">
+
+<div id="evaluatorLoginModal" class="modal" style="display: none;">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('registerModal')">&times;</span>
-        <!-- Your registration form content here -->
-        <h2>Register</h2>
-        <form action="./" method="POST">
+        <span class="close" onclick="closeModal('evaluatorLoginModal')">&times;</span>
+        <h2>Login as Evaluator</h2>
+        <form action="./users" method="POST">
             <div class="input-group">
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" required>
+                <label for="evaluatorEmail">Email:</label>
+                <input type="email" id="evaluatorEmail" name="email" required>
             </div>
             <div class="input-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <label for="evaluatorPassword">Password:</label>
+                <input type="password" id="evaluatorPassword" name="password" required>
             </div>
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <div class="forgot">
+                <h4>Forgot Password</h4>
             </div>
-            <button type="submit" class="save-button">Register</button>
+            <button type="submit" class="save-button">Login</button>
         </form>
     </div>
 </div>
+
+
+
+
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('registerModal')">&times;</span>
+        <h2>Register</h2>
+        <div class="form-container">
+            <form id="registerForm" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+                <div class="input-group">
+                    <label for="profilePicInput">Profile Picture</label>
+                    <input id="profilePicInput" class="center form-control-file" type="file" name="profile_pic" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label>Complete Name : </label>
+                    <input type="text" name="complete_name" class="form-control form-control-line" placeholder="Enter your full name">
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control form-control-line" placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control form-control-line" placeholder="Enter your password">
+                </div>
+
+                <div class="input-group">
+                    <label>Contact Number</label>
+                    <input type="number" name="contact_num" class="form-control form-control-line" placeholder="Enter your Contact Number">
+                </div>
+
+                <div class="input-group">
+                    <label>Address</label>
+                    <input type="text" name="address" class="form-control form-control-line" placeholder="Enter your Address">
+                </div>
+
+                <div class="input-group">
+                    <label>Self Description</label>
+                    <input type="text" name="description" class="form-control form-control-line" placeholder="Enter your Description">
+                </div>
+
+                <div class="form-group">
+                    <label>ROLES:</label>
+                    <input type="radio" name="role" value="author" onclick="setRoleValue(1); setAction();"> User/Author
+                    <input type="radio" name="role" value="evaluator" onclick="setRoleValue(2); setAction();"> Evaluator
+                    <input type="hidden" id="rolevalue" name="rolevalue">
+                </div>
+
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        setAction(); // Ensure action is set when the page loads
+    });
+
+    function setAction() {
+       if (roleElement) {
+            var roleValue = roleElement.value;
+            var formAction = roleValue === 'author' ? "<?php echo site_url('Register/registerauthor'); ?>" : "<?php echo site_url('Register/registerevaluator'); ?>";
+            document.getElementById('registerForm').action = formAction;
+            console.log("Form action set to: " + formAction);
+        }
+    }
+
+    function setRoleValue(value) {
+        document.getElementById('rolevalue').value = value;
+    }
+</script>
+     var roleElement = document.querySelector('input[name="role"]:checked');
+    
+
 
 <!-- JavaScript to show/hide the modal -->
 <script>
@@ -293,6 +400,15 @@
         var modal = document.getElementById(modalId);
         modal.style.display = "none";
     }
+</script>
 
-    
+<script>
+    function selectUserType() {
+        var userType = document.querySelector('input[name="user_type"]:checked').value;
+        if (userType === "author" || userType === "evaluator") {
+            document.getElementById("emailInput").style.display = "block";
+        } else {
+            document.getElementById("emailInput").style.display = "none";
+        }
+    }
 </script>

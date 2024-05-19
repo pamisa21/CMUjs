@@ -11,10 +11,10 @@ class User_Model extends CI_Model
     {
     if ($id === FALSE) {
 
-        $query = $this->db->get('users');
+        $query = $this->db->get('evaluator');
         return $query->result_array();
     }
-      $query = $this -> db -> get_where('users', array('id'=> $id));
+      $query = $this -> db -> get_where('evaluator', array('id'=> $id));
       return $query->row_array();
     }
 
@@ -26,7 +26,7 @@ class User_Model extends CI_Model
         
     public function delete_user($userid) {
         $this->db->where('userid', $userid);
-        $this->db->delete('users');
+        $this->db->delete('evaluator');
 
         if ($this->db->affected_rows() > 0) {
             return true;
@@ -36,17 +36,17 @@ class User_Model extends CI_Model
     }
 
     public function get_user_by_id($userid) {
-        $this->db->select('users.userid, users.complete_name, users.email, users.profile_pic, users.status, users.date_created,users.sex');
-        $this->db->from('users');
-        // $this->db->join('authors', 'authors.auid = users.auid', 'left');
-        $this->db->where('users.userid', $userid);
+        $this->db->select('evaluator.userid, evaluator.complete_name, evaluator.email, evaluator.profile_pic, evaluator.status, evaluator.date_created,evaluator.sex');
+        $this->db->from('evaluator');
+        // $this->db->join('authors', 'authors.auid = evaluator.auid', 'left');
+        $this->db->where('evaluator.userid', $userid);
         $query = $this->db->get();
         return $query->row_array(); // Assuming you only expect one row
     }
     
     public function editUser($userid, $data) {
         $this->db->where('userid', $userid);
-        return $this->db->update('users', $data);
+        return $this->db->update('evaluator', $data);
     }
 
 

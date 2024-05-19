@@ -5,27 +5,22 @@ class Evaluatorarticle_Model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        // It's good practice to call the parent constructor
+        
     }
 
     public function get_article($id = FALSE)
     {
-        // Specify the columns you want to select from both tables
         $this->db->select('articles.*, volume.vol_name, description');
         $this->db->from('articles');
-
-        // Join the 'volume' table based on the relationship between 'articles.volume_id' and 'volume.id'
         $this->db->join('volume', 'volume.volumeid = articles.volumeid');
-
+        $this->db->join('article_assigned', 'article_assigned.userid = evaluator.userid');
         if ($id !== FALSE) {
-            // If an article ID is provided, fetch the specific article
             $this->db->where('articles.id', $id);
             $query = $this->db->get();
-            return $query->row_array(); // Return single article
+            return $query->row_array(); 
         } else {
-            // If no specific article ID is provided, fetch all articles
             $query = $this->db->get();
-            return $query->result_array(); // Return array of articles
+            return $query->result_array(); 
         }
     }
 
@@ -33,27 +28,27 @@ class Evaluatorarticle_Model extends CI_Model
 
 
 
-
-
-    
     public function get_article_by_userid($userid = 1)
     {
-        // Specify the columns you want to select from both tables
-        $this->db->select('articles.*, volume.vol_name, volume.description');
-        $this->db->from('articles');
-    
-        // Join the 'volume' table based on the relationship between 'articles.volume_id' and 'volume.id'
-        $this->db->join('volume', 'volume.volumeid = articles.volumeid');
-    
+        // Specify the columns you want to select from the joined tables, including article_assigned.userid
+        $this->db->select('articles.*, volume.vol_name, volume.description, article_assigned.userid, evaluator.complete_name');
+        $this->db->from('article_assigned');
+        
+        // Join the articles table
+        $this->db->join('articles', 'article_assigned.articleid = articles.articleid');
+        
+        // Join the volume table
+        $this->db->join('volume', 'articles.volumeid = volume.volumeid');
+        
+        // Join the evaluator table
+        $this->db->join('evaluator', 'article_assigned.userid = evaluator.userid');
+        
         // Add a condition to filter articles by userid
-        $this->db->where('articles.userid', $userid);
-    
-        // // Add a condition to exclude articles that are published with a value of 0
-        // $this->db->where('articles.published =', 0);
-    
+        $this->db->where('article_assigned.userid', $userid);
+        
         // Execute the query and return the result
         $query = $this->db->get();
         return $query->result_array();
     }
-}    
+}
 

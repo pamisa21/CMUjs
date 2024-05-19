@@ -12,7 +12,7 @@ class Evaluatoraccount_Model extends CI_Model
             $query = $this->db->get('users');
             return $query->result_array();
         }
-        $query = $this->db->get_where('users', array('userid' => 1));
+        $query = $this->db->get_where('evaluator', array('userid' => 1));
         return $query->row_array();
     }
 }

@@ -31,8 +31,7 @@ class Users extends CI_Controller {
         $complete_name = $this->input->post('complete_name');          
         $email = $this->input->post('email');
         $pword = $this->input->post('password');
-        $sex = $this->input->post('sex_value'); // Retrieve sex value
-        
+        $sex = $this->input->post('sex_value');
         
 
         if ($_FILES['profile_pic']['name']) {
@@ -191,11 +190,13 @@ public function edituser($userid) {
 
     public function addauthor() {   
         if ($this->input->post()) {
-            $author_name = $this->input->post('author_name');          
+            $complete_name = $this->input->post('complete_name');          
             $email = $this->input->post('email');
             $contact_num = $this->input->post('contact_num');
             $title = $this->input->post('title');
             $sex = $this->input->post('sex'); 
+
+
 
     
             if ($_FILES['profile_pic']['name']) {
@@ -212,9 +213,9 @@ public function edituser($userid) {
             } else {
                 $profile_pic = 'noimages.jpg';
             }
-            $status = 1;
+    
             $data = array(
-                'author_name' => $author_name,
+                'complete_name' => $complete_name,
                 'email' => $email,
                 'sex' => $sex,
                 'contact_num' => $contact_num,
@@ -236,6 +237,15 @@ public function edituser($userid) {
         $data['users_content'] = 'users/authors';
         $this->load->view($data['users_content'], $data);
     }		
+
+
+
+
+
+
+
+
+
     public function deleteauthor($auid) {
         // Load the Author_model
         $this->load->model('Author_model');
@@ -269,7 +279,7 @@ public function edituser($userid) {
             show_404();
         }
         
-        $this->load->view('users/AuthorDetails', $data); 
+        $this->load->view('users/author/AuthorDetails', $data); 
         $data['title'] = 'User Profile';
         
     }
@@ -291,7 +301,7 @@ public function edituser($userid) {
     
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $userData = [
-                'author_name' => $this->input->post('author_name'),
+                'complete_name' => $this->input->post('complete_name'),
                 'email' => $this->input->post('email'),
                 'profile_pic' => $this->input->post('profile_pic'), 
                 'sex' => $this->input->post('sex'), 
@@ -308,7 +318,7 @@ public function edituser($userid) {
         }
     
      
-        $this->load->view('users/updateauthor_details', $data); 
+        $this->load->view('users/author/updateauthor_details', $data); 
         $data['title'] = 'User Profile';
         
     }
@@ -504,6 +514,9 @@ public function editArticle($articleid) {
 
 
 
+
+
+
 public function assignarticle($articleid) {
     $this->load->model('Article_model');
 
@@ -519,12 +532,9 @@ public function assignarticle($articleid) {
     $data['users'] = $this->Article_model->get_users();
 
     if ($this->input->server('REQUEST_METHOD') === 'POST') {
-        $userData = [
-            'userid' => $this->input->post('userid'),
-            'assign' => 1,
-        ];
+        $userids = $this->input->post('userid'); // Array of user IDs
 
-        if ($this->Article_model->assignarticle($articleid, $userData)) {
+        if ($this->Article_model->assign_articles($articleid, $userids)) {
             redirect('users/article');
         } else {
             $data['error'] = 'Error assigning article.';
@@ -533,6 +543,20 @@ public function assignarticle($articleid) {
 
     $this->load->view('users/article/updateassingarticle', $data);  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

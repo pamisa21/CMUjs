@@ -66,8 +66,8 @@
                     <input type="file" id="profile_pic" name="profile_pic">
                 </div>
                 <div class="user-form-group">
-                    <label for="author_name">authors Name:</label>
-                    <input type="text" id="author_name" name="author_name" value="<?php echo htmlspecialchars($authors['author_name']); ?>">
+                    <label for="complete_name">authors Name:</label>
+                    <input type="text" id="complete_name" name="complete_name" value="<?php echo htmlspecialchars($authors['complete_name']); ?>">
                 </div>
                 <div class="user-form-group">
                     <label for="email">Email:</label>

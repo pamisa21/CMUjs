@@ -46,7 +46,7 @@
                         <option value="">Select an Author</option> 
                         <?php foreach ($authors as $author): ?>
                             <option value="<?php echo $author['auid']; ?>" <?php if ($author['auid'] == $articles['auid']) echo 'selected'; ?>>
-                                <?php echo htmlspecialchars($author['author_name']); ?>
+                                <?php echo htmlspecialchars($author['complete_name']); ?>
                         </option>
                            
                         <?php endforeach; ?>

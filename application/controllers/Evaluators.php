@@ -19,23 +19,19 @@ class Evaluators extends CI_Controller {
 
     }
 
-   
-    public function Assign ()
+    public function assign()
     {
-        $data['evaluatorrarticle_content'] = 'Evaluators/report';
         $this->load->view('Templates/sidebarevaluator.php');
-        
-        // Load the model
-        $this->load->model('evaluatorarticle_model');
+
+        $this->load->model('Evaluatorarticle_Model');
     
-        // Fetch articles where auid is equal to 1
-        $data['articles'] = $this->evaluatorarticle_model->get_article_by_userid();
+        // Fetch articles assigned to the evaluator with userid = 1
+        $data['articles'] = $this->Evaluatorarticle_Model->get_article_by_userid(1);
     
         // Pass data to the view
         $this->load->view('Evaluators/report', $data);
     }
-
-
+    
 
 
     public function account ()

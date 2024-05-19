@@ -88,9 +88,9 @@
 
         <h3><span class="first-line">CMU Knowledge Hub:</span><br><span class="second-line">Central Mindanao University's <br>
          Article Repository</span></h3>
-        <p>Uniting Knowledge, Inspiring Progress, and Empowering Minds for a Brighter Future.</p>
+        <p>Uniting Knowledge, Inspiring Progress, and Empowering Minds for a Brighter Future. <BR>CMU Journal of Science publishes quality research outputs in the field of natural sciences,<BR>mathematics, engineering, and social sciences from local, national, and international contributors.</p>
         <div>
-            <button>Get Started!</button>
+            <button onclick="openModal('loginModal')">Get Started!</button>
         </div>
 
         <!-- Image Container -->

@@ -31,8 +31,8 @@
                 <input type="text" id="filename" name="filename" value="<?php echo htmlspecialchars($article['filename']); ?>" readonly>
             </div>
             <div class="user-form-group">
-                <label for="author_name">Author Name:</label>
-                <input type="text" id="author_name" name="author_name" value="<?php echo htmlspecialchars($article['author_name']); ?>" readonly>
+                <label for="complete_name">Author Name:</label>
+                <input type="text" id="complete_name" name="complete_name" value="<?php echo htmlspecialchars($article['complete_name']); ?>" readonly>
             </div>
             <div class="user-form-group">
                 <label for="doi">DOI:</label>

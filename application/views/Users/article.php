@@ -175,7 +175,7 @@
                     <td><?php echo $article['title']; ?></td>
                     <td><?php echo $article['keywords']; ?></td>
                     <!-- <td><?php echo $article['filename']; ?></td> -->
-                    <td><?php echo $article['author_name']; ?></td>
+                    <td><?php echo $article['complete_name']; ?></td>
                     <td><?php echo $article['doi']; ?></td>
                     
                     <td>
@@ -281,7 +281,7 @@
                     <select id="authorSelect" class="form-control" name="auid">
                         <option value="">Select an Author</option> 
                         <?php foreach ($authors as $author): ?>
-                            <option value="<?php echo $author['auid']; ?>"><?php echo $author['author_name']; ?></option>
+                            <option value="<?php echo $author['auid']; ?>"><?php echo $author['complete_name']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

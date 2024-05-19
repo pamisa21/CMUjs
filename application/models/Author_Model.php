@@ -36,7 +36,7 @@ public function deleteauthor($auid) {
     }
 }
 public function get_author_by_id($auid) {
-    $this->db->select('authors.auid, authors.author_name, authors.email, authors.profile_pic, authors.contact_num, authors.title,authors.sex');
+    $this->db->select('authors.auid, authors.complete_name, authors.email, authors.profile_pic, authors.contact_num, authors.title,authors.sex');
     $this->db->from('authors');
     // $this->db->join('authors', 'authors.auid = authors.auid', 'left');
     $this->db->where('authors.auid', $auid);

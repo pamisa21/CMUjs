@@ -137,7 +137,7 @@
         <h2>Manage Users</h2>
         <h4>April 30, 2024</h4>
         <div class="add-button">
-            <button onclick="openModal()">Add User</button>
+            <button onclick="openModal()">Add Author</button>
         </div>
     </div>  
 
@@ -157,7 +157,7 @@
             <?php foreach ($users as $author): ?>
                 <tr>
                     <td><?php echo $author['title']; ?></td>
-                    <td><?php echo $author['author_name']; ?></td>
+                    <td><?php echo $author['complete_name']; ?></td>
                     <td><?php echo $author['sex'] == 1 ? 'Male' : 'Female'; ?></td>
                     <td><?php echo $author['email']; ?></td>
                     <td><?php echo $author['contact_num']; ?></td>
@@ -202,14 +202,14 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <div class="form-container">
-            <form method="POST" action="<?php echo site_url('users/editAuthor'); ?>" enctype="multipart/form-data" class="form-horizontal form-material">
+            <form method="POST" action="<?php echo site_url('users/addauthor'); ?>" enctype="multipart/form-data" class="form-horizontal form-material">
                 <div class="form-group">
                     <label for="profilePicInput" style="margin-bottom: 20px;">Profile Picture</label>
                     <input id="profilePicInput" class="center form-control-file" type="file" name="profile_pic" accept="image/*">
                 </div>
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="author_name" class="form-control form-control-line" placeholder="Enter your full name">
+                    <input type="text" name="complete_name" class="form-control form-control-line" placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
                     <label>Email</label>
