@@ -3,11 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
- /* body {
-    font-family: 'Quattrocento', serif;
-    margin: 0;
-    padding: 0;
-} */
+
 .content {
     position: relative; 
     margin-left: 40px;
@@ -217,73 +213,66 @@
   font-weight: bold;
   color:#138143
 }
-
+.doi {
+    font-size: 12px;
+    color: blue;
+    text-decoration-line: underline;
+}
 </style>
 </head>
 <body>
     
 <div class="content">
     <div class="column column-1">
-            <?php
-            // Display authors
-            foreach ($articles as $articles):
-            ?>
-            <div class="card">
-                <div class="profile">
-                    <img class="author-img" src="public/assets/images/767.jpg" alt="Author Profile Image">
-                    <div class="author-info">
-                        <p class="author-name"><?php echo $articles['auid']; ?></p>
-                        <p class="author-position" style="margin-top:-2px">Faculty</p>
-                    </div>
+        <?php foreach ($articles as $article): ?>
+        <div class="card">
+            <div class="profile">
+                <img class="author-img" src="public/assets/images/767.jpg" alt="Author Profile Image">
+                <div class="author-info">
+                    <p class="author-name"><?php echo $article['complete_name']; ?></p>
+                    <p class="author-position" style="margin-top:-2px"><?php echo $article['email']; ?></p>
                 </div>
-
-                <div class="images">
-              <img src="public/assets/images/767.jpg" alt="" 
-              div>
+            </div>
+            <div class="images">
+                <img src="public/assets/images/767.jpg" alt="">
+            </div>
             <div class="articlebio">
-                 
-                  <p class="Title"><?php echo $articles['title']; ?></p>
-                  <p class="subtitle"> SubTitle</p>
+                <p class="Title"><?php echo $article['title']; ?></p>
+                <p class="doi"><a href="<?php echo $article['doi']; ?>"><?php echo $article['doi']; ?></a></p>
 
-                  <p class="description"><?php echo $articles['keywords']; ?></p>
-                  <div class="buttoninfo">
-                      <button class="viewinfo">View Info?</button>
-                      <button class="viewmore">View More?</button>
-                    </div>
-                  </div>
+                <p class="description"><?php echo $article['keywords']; ?></p>
+                <div class="buttoninfo">
+                    <button class="viewinfo">View Info?</button>
+                    <button class="viewmore">View More?</button>
+                </div>
             </div>
         </div>
-     
-        <?php
-            endforeach;
-            ?>
-     
+        <?php endforeach; ?>
     </div>
-
     <div class="column column-2 small-volume">
         <h3 class="volumelabel">List of Volume</h3>
         <div class="volume">
-              <ul id="volumeList">
-
-                <li onclick="showArticle('Volume 1')"><span class="icon-volume"></span> Volume 1</li>
-                <li onclick="showArticle('Volume 2')"><span class="icon-volume"></span> Volume 2</li>
-                <li onclick="showArticle('Volume 3')"><span class="icon-volume"></span> Volume 3</li>
-                <li onclick="showArticle('Volume 4')"><span class="icon-volume"></span> Volume 4</li>
-                <li onclick="showArticle('Volume 5')"><span class="icon-volume"></span> Volume 5</li>
-              </ul>
-
+            <ul id="volumeList">
+                <?php foreach ($volumes as $volume): ?>
+                <li onclick="showArticle('<?php echo $volume['vol_name']; ?>')">
+                    <span class="icon-volume"></span> <?php echo $volume['vol_name']; ?>
+                </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </div>
 </div>
 
-
 <script>
-// Function to handle the click event on list items
-function showArticle(volume) {
-    // You can add logic here to dynamically load articles based on the selected volume
-    alert("You clicked on Volume: " + volume);
-}
+    function showArticle(volumeName) {
+        // Implement JavaScript function to handle article display based on volume
+        alert('Showing articles for ' + volumeName);
+    }
 </script>
+
+
+
+
 
 </body>
 </html>

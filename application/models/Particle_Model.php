@@ -5,32 +5,38 @@ class Particle_Model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        // It's good practice to call the parent constructor
     }
 
     public function get_particle($id = FALSE)
     {
-        // Specify the columns you want to select from both tables
-        $this->db->select('articles.*, volume.vol_name, description');
+        $this->db->select('articles.*, volume.vol_name, volume.status, authors.complete_name,authors.email, keywords');
         $this->db->from('articles');
-    
-        // Join the 'volume' table based on the relationship between 'articles.volume_id' and 'volume.id'
         $this->db->join('volume', 'volume.volumeid = articles.volumeid');
-    
-        // Add a condition to only fetch articles where 'published' is 1
+        $this->db->join('authors', 'authors.auid = articles.auid'); 
+
+        $this->db->where('volume.status', 3);
         $this->db->where('articles.published', 1);
-    
+
         if ($id !== FALSE) {
-            // If an article ID is provided, fetch the specific article
             $this->db->where('articles.id', $id);
             $query = $this->db->get();
-            return $query->row_array(); // Return single article
+            return $query->row_array(); 
         } else {
-            // If no specific article ID is provided, fetch all articles
             $query = $this->db->get();
-            return $query->result_array(); // Return array of articles
+            return $query->result_array(); 
         }
     }
-    
+
+    public function get_volumes()
+    {
+        $this->db->select('*');
+        $this->db->from('volume');
+        $this->db->where('status', 3);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
+
+
+
 

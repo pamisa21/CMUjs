@@ -383,7 +383,7 @@
         document.getElementById('rolevalue').value = value;
     }
 </script>
-     var roleElement = document.querySelector('input[name="role"]:checked');
+   
     
 
 
