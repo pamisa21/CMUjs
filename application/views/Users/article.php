@@ -190,9 +190,9 @@
                         </td>  
                     
                         <td><?php echo $article['assign'] == 1 ? 'Assign' : 'Not Assign'; ?></td>
-                                        <td>
+                    <td>
                         <a href="#" class="viewbutton" id="view_<?php echo $article['articleid']; ?>" onclick="getArticleDetails(<?php echo $article['articleid']; ?>)" title="View Details">
-                            <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 10px;"></span>
+                            <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 15px;margin-bottom: 15px;"></span>
                         </a>
                     
                         <a href="#" class="editButton" id="edit_<?php echo $article['articleid']; ?>" onclick="editArticle(<?php echo $article['articleid']; ?>)" title="Edit Article">
@@ -200,11 +200,18 @@
                         </a>
                         
                         <a href="#" class="deleteButton" id="delete_<?php echo $article['articleid']; ?>" onclick="deletearticle(<?php echo $article['articleid']; ?>)" title="Delete Article">
-                            <span class="glyphicon glyphicon-trash icondelete" style="margin-right: 10px;"></span>
+                            <span class="glyphicon glyphicon-trash icondelete" style="margin-right: 15px;"></span>
                         </a>
-                        
                         <a href="#" class="assignbutton" id="assign_<?php echo $article['articleid']; ?>" onclick="assignArticle(<?php echo $article['articleid']; ?>)" title="Assign Article">
-                            <span class="glyphicon glyphicon-send" style="margin-right: 10px;"></span>
+                            <span class="glyphicon glyphicon-send icon" style="margin-right: 15px;"></span>
+                        </a>
+
+                        <a href="#" class="viewAssign" id="viewas <?php echo $article['articleid']; ?>" onclick="viewassign(<?php echo $article['articleid']; ?>)" title="View Assign Article">
+                            <span class="glyphicon glyphicon glyphicon-list-alt" style="margin-right: 2px;margin-left: 20px"></span>
+                        </a>
+
+                        <a href="#" class="manageassign" id="manageassign <?php echo $article['articleid']; ?>" onclick="manageassign(<?php echo $article['articleid']; ?>)" title="Manage Assign Article">
+                            <span class="glyphicon glyphicon glyphicon-cog" style="margin-right: 5px;margin-left: 10px"></span>
                         </a>
                     </td>
                 </tr>
@@ -240,7 +247,14 @@
         </div>
     </div>
 </div>
-
+<div id="viewassigmodal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeviewassigmodal()">&times;</span>
+        <div id="viewassingarticle" class="form-container">
+           
+        </div>
+    </div>
+</div>
 
 </body>
 
@@ -321,13 +335,13 @@
 </script> -->
 <script>
     function getArticleDetails(articleid) {
-        // Make an AJAX request to fetch user details
+
         fetch(`http://127.0.0.1:5500/users/getArticleDetails/${articleid}`)
             .then(response => response.text())
             .then(html => {
-                // Display user details in the modal
+
                 document.getElementById('articledetails').innerHTML = html;
-                // Show the modal
+  
                 document.getElementById('articleDetailsModal').style.display = 'block';
             })
             .catch(error => console.error('Error fetching Article details:', error));
@@ -390,6 +404,63 @@
     function closeassignarticleModal() {
         document.getElementById('assignarticleModal').style.display = 'none';
     }
+
+
+    function viewassign(articleid) {
+        if (confirm('Are you sure you want to View Assign  Article?')) {
+            window.location.href = `http://127.0.0.1:5500/users/viewassign/${articleid}`
+        }
+    }   
+
+
+    function viewassign(articleid) {
+        fetch(`http://127.0.0.1:5500/users/viewassign/${articleid}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('viewassingarticle').innerHTML = html;
+
+                document.getElementById('viewassigmodal').style.display = 'block';
+            })
+            .catch(error => console.error('Error fetching Article details:', error));
+    }
+    function closeviewassigmodal() {
+        document.getElementById('viewassigmodal').style.display = 'none';
+    }
+
+
+
+    function manageassign(articleid) {
+        if (confirm('Are you sure you want to Manage?')) {
+            window.location.href = `http://127.0.0.1:5500/users/manageassign/${articleid}`
+        }
+    }   
+
+
+
+    
+    function manageassign(articleid) {
+        fetch(`http://127.0.0.1:5500/users/manageassign/${articleid}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('manageassingarticle').innerHTML = html;
+
+                document.getElementById('manageassigmodal').style.display = 'block';
+            })
+            .catch(error => console.error('Error fetching Article details:', error));
+    }
+    function closemanageassigmodal() {
+        document.getElementById('manageassigmodal').style.display = 'none';
+    }
+
 </script>
+
 </html>
 
+<div id="manageassigmodal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closemanageassigmodal()">&times;</span>
+        <div id="manageassingarticle" class="form-container">
+           
+        </div>
+    </div>
+</div>

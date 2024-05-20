@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
+    <title>Manage Evaluators</title>
     <link rel="stylesheet" href="<?php echo base_url('public/assets/css/manageusers.css'); ?>">
     <style>
         table {
@@ -141,7 +141,7 @@
 
 <div class="container">
     <div class="title">
-        <h2>Manage Users</h2>
+        <h2>Manage Evaluators</h2>
         <h4>April 30, 2024</h4>
         <div class="add-button">
             <button onclick="openModal()">Add Evaluator</button>

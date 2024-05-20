@@ -449,7 +449,7 @@ public function addarticle() {
 
     // Load views
     $this->load->view('Templates/sidebar.php');
-    $this->load->view('users/add_article', $data); // Ensure this is the correct view path
+    $this->load->view('users/add_article', $data); 
     $this->load->view('Templates/sidebarfooter.php');
 }
 
@@ -507,11 +507,17 @@ public function editArticle($articleid) {
     $this->load->view('users/article/updatearticle_details', $data); 
     
 }
+public function viewassign($articleid) {
+    $this->load->model('Article_model');
+    $data['article_assigned'] = $this->Article_model->viewassign($articleid);
 
+    if (empty($data['article_assigned'])) {
+        show_404();
+    }
 
-
-
-
+    $data['title'] = 'Assigned Articles'; 
+    $this->load->view('users/article/view_assigned_details', $data);
+}
 
 
 
@@ -528,12 +534,10 @@ public function assignarticle($articleid) {
         show_404(); 
     }
 
-    // Fetch users
     $data['users'] = $this->Article_model->get_users();
 
     if ($this->input->server('REQUEST_METHOD') === 'POST') {
-        $userids = $this->input->post('userid'); // Array of user IDs
-
+        $userids = $this->input->post('userid');
         if ($this->Article_model->assign_articles($articleid, $userids)) {
             redirect('users/article');
         } else {
@@ -545,8 +549,31 @@ public function assignarticle($articleid) {
 }
 
 
+public function manageassign($articleid) {
+    $this->load->model('Article_model');
+    $data['article_assigned'] = $this->Article_model->manageassign($articleid);
+    $data['authors'] = $this->Article_model->get_authors(); 
 
 
+    if (empty($data['article_assigned'])) {
+        show_404();
+    }
+
+    $data['title'] = 'Assigned Articles'; 
+    $this->load->view('users/article/manageassign', $data);
+}
+
+
+    public function delete_assignment($auid) {
+        // Load the Author_model
+        $this->load->model('Article_model');
+        
+        // Call the deleteauthor method from the loaded model
+        $deleteResult = $this->Article_model->delete_assignment($auid);
+
+        redirect('users/article#');
+    }
+    
 
 
 
@@ -580,7 +607,7 @@ public function volume()
         $this->load->view($data['volume_content'], $data);
         $this->load->view('Templates/sidebarfooter.php');
     } else {
-        // Handle model loading error
+    
         echo "Error loading Volume_Model";
     }
 }
@@ -635,15 +662,13 @@ public function view_volumedetails($volumeid) {
 
 
 public function editVolume($volumeid) {
-    // Load the User_model
+
     $this->load->model('Volume_model');
-    
-    // Retrieve user data by user id
+
     $data['volume'] = $this->Volume_model->get_volume_by_id($volumeid);
 
-    // Check if user data is retrieved
     if (!$data['volume']) {
-        show_404(); // User not found, show 404 page
+        show_404(); 
     }
 
 
