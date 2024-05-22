@@ -152,6 +152,7 @@
         <table>
             <thead>
                 <tr>
+                     <th>Profile</th> <!-- New column for profile pictures -->
                     <th>Complete Name</th>
                     <th>Email</th>
                     
@@ -163,6 +164,10 @@
             <tbody>
             <?php foreach ($users as $user): ?>
                 <tr>
+                <td>
+                        <!-- Check if image exists and display, otherwise show a placeholder -->
+                        <img src="<?php echo file_exists('./public/assets/images/users/' . $user['profile_pic']) ? base_url('./public/assets/images/users/' . $user['profile_pic']) : base_url('./public/assets/images/users/noimage.png'); ?>" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </td>
                     <td><?php echo $user['complete_name']; ?></td>
                     <td><?php echo $user['email']; ?></td>
                    
@@ -229,12 +234,34 @@
                     <label>Password</label>
                     <input type="password" name="password" class="form-control form-control-line" placeholder="Enter your password">
                 </div>
+                
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="number" name="contact_num" class="form-control form-control-line" placeholder="Enter Authors Phone Number">
+                </div>
+                <div class="form-group">
+                    <label>Authors Description</label>
+                    <input type="description" name="description" class="form-control form-control-line" placeholder="Enter Authors Description">
+                </div>
+                <div class="form-group">
+                    <label>Authors Address</label>
+                    <input type="address" name="address" class="form-control form-control-line" placeholder="Enter Authors Address">
+                </div>
                 <div class="form-group">
                 <label>Sex:</label>
                 <label><input type="radio" name="sex" value="male" onclick="setSexValue(1)"> Male</label>
                 <label><input type="radio" name="sex" value="female" onclick="setSexValue(2)"> Female</label>
                 <input type="hidden" id="sexValue" name="sex_value">
 
+                </div>
+                <div class="form-group">
+
+                <label for="title">Title:</label>
+                <select name="title" id="title" class="form-control">
+                    <option value="Mr.">Mr.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Dr.">Dr.</option>
+                </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>

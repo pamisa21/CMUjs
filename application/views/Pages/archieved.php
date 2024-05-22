@@ -168,7 +168,7 @@
   }
   .buttoninfo {
     margin-top: 20px;
-    margin-left: 60px;
+    /* margin-left: 60px; */
     border-radius: 50px;
     
   }
@@ -235,8 +235,12 @@
                 <p class="Title"><?php echo $volume['vol_name']; ?></p>
                 <p class="description"><?php echo $volume['description']; ?></p>
                 <div class="buttoninfo">
-                    <button class="viewinfo">View Info?</button>
-                    <button class="viewmore">View More?</button>
+                <button class="viewinfo" onclick="viewpublicvolume(<?php echo $volume['volumeid']; ?>)">
+                    <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 10px;"></span>
+                    View Info
+                </button>
+
+                
                 </div>
             </div>
         </div>
@@ -263,7 +267,56 @@
 
 </div>
 
+<!-- The Modal -->
+<div id="articleModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="modalContent">
+      <!-- Article details will be loaded here dynamically -->
+      <button id="modalCloseButton" class="viewmore">Close</button>
+    </div>
+  </div>
+</div>
 
+<script>
+    // Get the modal
+    var modal = document.getElementById("articleModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+
+    var closeButton = document.getElementById("modalCloseButton");
+
+  
+    function viewpublicvolume(volumeid) {
+ 
+        fetch(`http://127.0.0.1:5500/pages/viewpublicvolume/${volumeid}`)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("modalContent").innerHTML = data + document.getElementById("modalCloseButton").outerHTML;
+            modal.style.display = "block";
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+  
+    closeButton.onclick = function() {
+        modal.style.display = "none";
+    }
+
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
   <script>
   // Function to handle the click event on list items

@@ -361,7 +361,7 @@ h4{
                         <p class="description"><?php echo htmlspecialchars($article['keywords']); ?></p>
                         <div class="buttoninfo">
                             <button class="viewinfo">View Info?</button>
-                            <button class="viewmore">View More?</button>
+                         
                             <button class="viewcheck" onclick="openModal()">Check</button>
                         </div>
                     </div>

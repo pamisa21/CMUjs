@@ -18,6 +18,8 @@ class Authors extends CI_Controller {
         $this->load->view('Authors/Authordashboard');
 
     }
+
+    
     public function Article()
     {
         $data['authorarticle_content'] = 'Authors/Article';

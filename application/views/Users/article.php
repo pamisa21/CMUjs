@@ -138,6 +138,9 @@
             .archive-status {
                 color: gray; /* Example styling for archive status */
             }
+            .assign{
+                color: blue;
+            }
 
     </style>
 </head>
@@ -148,18 +151,18 @@
         <h2>Manage Article</h2>
         <h4>April 30, 2024</h4>
         <div class="add-button">
-        <!-- Floating "Add User" button -->
-        <button onclick="openModal()">Add Article</button>
+            <!-- Floating "Add User" button -->
+            <button onclick="openModal()">Add Article</button>
         </div>
     </div>
     <div class="Table">
-    <table>
-        <thead>
-                 <tr>
+        <table>
+            <thead>
+                <tr>
                     <th>Volume</th>
                     <th>Title</th>
                     <th>Keywords</th>
-                    <!-- <th>File Name</th> -->
+                    <th>File</th>
                     <!-- <th>Abstract</th> -->
                     <th>Author</th>
                     <th>DOI</th>
@@ -167,57 +170,63 @@
                     <th>Assign</th>
                     <th>Actions</th>
                 </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
                 <?php foreach ($article as $article): ?>
                 <tr>
                     <td><?php echo $article['vol_name']; ?></td>
                     <td><?php echo $article['title']; ?></td>
                     <td><?php echo $article['keywords']; ?></td>
+                    <td>
+                        <?php if (!empty($article['filename'])): ?>
+                            <a href="<?php echo base_url('public/assets/files/' . $article['filename']); ?>" target="_blank">
+                                <img src="<?php echo base_url('public/assets/files/pdficon.png'); ?>" alt="PDF" width="40" height="40">
+                            </a>
+                        <?php else: ?>
+                            No file uploaded
+                        <?php endif; ?>
+                    </td>
                     <!-- <td><?php echo $article['filename']; ?></td> -->
                     <td><?php echo $article['complete_name']; ?></td>
                     <td><?php echo $article['doi']; ?></td>
-                    
                     <td>
-                            <?php
-                            $status = $article['published'];
-                            if ($status == 1) {
-                                echo '<span class="publish-status">Publish</span>';
-                            } elseif ($status == 0) {
-                                echo '<span class="unpublish-status">Unpublish</span>';
-                            }
-                            ?>
-                        </td>  
-                    
-                        <td><?php echo $article['assign'] == 1 ? 'Assign' : 'Not Assign'; ?></td>
+                        <?php
+                        $status = $article['published'];
+                        echo $status == 1 ? '<span class="publish-status">Publish</span>' : '<span class="unpublish-status">Unpublish</span>';
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        $assign = $article['assign'];
+                        echo $assign == 1 ? '<span class="assign">Assign</span>' : '<span class="unpublish-status">Not Yet Assign</span>';
+                        ?>
+                    </td>
                     <td>
                         <a href="#" class="viewbutton" id="view_<?php echo $article['articleid']; ?>" onclick="getArticleDetails(<?php echo $article['articleid']; ?>)" title="View Details">
                             <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 15px;margin-bottom: 15px;"></span>
                         </a>
-                    
                         <a href="#" class="editButton" id="edit_<?php echo $article['articleid']; ?>" onclick="editArticle(<?php echo $article['articleid']; ?>)" title="Edit Article">
                             <span class="glyphicon glyphicon-pencil icon" style="margin-right: 15px;"></span>
                         </a>
-                        
                         <a href="#" class="deleteButton" id="delete_<?php echo $article['articleid']; ?>" onclick="deletearticle(<?php echo $article['articleid']; ?>)" title="Delete Article">
                             <span class="glyphicon glyphicon-trash icondelete" style="margin-right: 15px;"></span>
                         </a>
                         <a href="#" class="assignbutton" id="assign_<?php echo $article['articleid']; ?>" onclick="assignArticle(<?php echo $article['articleid']; ?>)" title="Assign Article">
                             <span class="glyphicon glyphicon-send icon" style="margin-right: 15px;"></span>
                         </a>
-
-                        <a href="#" class="viewAssign" id="viewas <?php echo $article['articleid']; ?>" onclick="viewassign(<?php echo $article['articleid']; ?>)" title="View Assign Article">
-                            <span class="glyphicon glyphicon glyphicon-list-alt" style="margin-right: 2px;margin-left: 20px"></span>
-                        </a>
-
-                        <a href="#" class="manageassign" id="manageassign <?php echo $article['articleid']; ?>" onclick="manageassign(<?php echo $article['articleid']; ?>)" title="Manage Assign Article">
-                            <span class="glyphicon glyphicon glyphicon-cog" style="margin-right: 5px;margin-left: 10px"></span>
-                        </a>
+                        <?php if ($article['assign'] == 1): ?>
+                            <a href="#" class="viewAssign" id="viewas<?php echo $article['articleid']; ?>" onclick="viewassign(<?php echo $article['articleid']; ?>)" title="View Assign Article">
+                                <span class="glyphicon glyphicon glyphicon-list-alt" style="margin-right: 2px;margin-left: 20px"></span>
+                            </a>
+                            <a href="#" class="manageassign" id="manageassign<?php echo $article['articleid']; ?>" onclick="manageassign(<?php echo $article['articleid']; ?>)" title="Manage Assign Article">
+                                <span class="glyphicon glyphicon glyphicon-cog" style="margin-right: 5px;margin-left: 10px"></span>
+                            </a>
+                        <?php endif; ?>
                     </td>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -263,7 +272,12 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <div class="form-container">
-            <form method="POST" action="<?php echo site_url('users/addarticle'); ?>" class="form-horizontal form-material">
+            <form method="POST" action="<?php echo site_url('users/addarticle'); ?>" class="form-horizontal form-material" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="profilePicInput" style="margin-bottom: 20px;">PDF File</label>
+                    <input id="profilePicInput" class="center form-control-file" type="file" name="filename" accept="application/pdf" required>
+                </div>
+
                 <div class="form-group">
                     <label for="articleNameInput">Article Name</label>
                     <input id="articleNameInput" class="form-control" type="text" name="title" placeholder="Enter article name">
@@ -275,26 +289,28 @@
                 <div class="form-group">
                     <label for="abstractInput">Abstract</label>
                     <textarea id="abstractInput" class="form-control" name="abstract" placeholder="Enter abstract"></textarea>
-                </div>
+                </div>      
                 <div class="form-group">
                     <label for="doiInput">DOI</label>
                     <input id="doiInput" class="form-control" type="text" name="doi" placeholder="Enter DOI">
                 </div>
                 <div class="form-group">
-                <label for="volumeSelect">Select Volume</label>
-                <select id="volumeSelect" class="form-control" name="volumeid">
-                    <option value="">Select a Volume</option> 
-                    <?php foreach ($volumes as $volume): ?>
-                        <option value="<?php echo $volume['volumeid']; ?>"><?php echo $volume['vol_name']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+                    <label for="volumeSelect">Select Volume</label>
+                    <select id="volumeSelect" class="form-control" name="volumeid">
+                        <option value="">Select a Volume</option> 
+                        <?php foreach ($volumes as $volume): ?>
+                         
+                                <option value="<?php echo $volume['volumeid']; ?>"><?php echo $volume['vol_name']; ?></option>
+                           
+                        <?php endforeach; ?>
+                    </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="authorSelect">Select Author</label>
                     <select id="authorSelect" class="form-control" name="auid">
                         <option value="">Select an Author</option> 
-                        <?php foreach ($authors as $author): ?>
+                        <?php foreach ($authors as $author): ?>                      
                             <option value="<?php echo $author['auid']; ?>"><?php echo $author['complete_name']; ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -307,6 +323,7 @@
         </div>
     </div>
 </div>
+
 
 
 

@@ -60,11 +60,7 @@
     <div class="user-center">
         <?php if (!empty($user)) : ?>
             <form method="post" action="<?php echo base_url('users/edituser/'.$user['userid']); ?>">
-                <div class="user-form-group">
-                    <label for="profile_pic">Profile Picture:</label>
-                    <img class="user-img" src="<?php echo htmlspecialchars($user['profile_pic']); ?>" alt="Profile Picture">
-                    <input type="file" id="profile_pic" name="profile_pic">
-                </div>
+
                 <div class="user-form-group">
                     <label for="complete_name">Complete Name:</label>
                     <input type="text" id="complete_name" name="complete_name" value="<?php echo htmlspecialchars($user['complete_name']); ?>">
@@ -73,7 +69,14 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>">
                 </div>
-                
+                <div class="user-form-group">
+                    <label for="description">Authors Description:</label>
+                    <input type="text" id="description" name="description" value="<?php echo htmlspecialchars($user['description']); ?>" >
+                </div>                
+                <div class="user-form-group">
+                    <label for="address">Authors Address></label>
+                    <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($user['address']); ?>" >
+                </div>
                 <div class="user-form-group">
                 <label for="status">Status:</label>
                 <select id="status" name="status">

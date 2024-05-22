@@ -26,50 +26,72 @@ class Users extends CI_Controller {
     }
     
 
-    public function adduser() {   
-    if ($this->input->post()) {
-        $complete_name = $this->input->post('complete_name');          
-        $email = $this->input->post('email');
-        $pword = $this->input->post('password');
-        $sex = $this->input->post('sex_value');
-        
 
-        if ($_FILES['profile_pic']['name']) {
-            $config['upload_path'] = './assets/images/users/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['max_size'] = 2048;
-            $this->load->library('upload', $config);
-            if ($this->upload->do_upload('profile_pic')) {
-                $data = $this->upload->data();
-                $profile_pic = $data['file_name'];
+    public function adduser() {   
+        if ($this->input->post()) {
+            $complete_name = $this->input->post('complete_name');          
+            $email = $this->input->post('email');
+            $pword = $this->input->post('password');
+            $sex = $this->input->post('sex_value');
+            $address = $this->input->post('address');
+            $description = $this->input->post('description');
+            $contact_num = $this->input->post('contact_num');
+            $title = $this->input->post('title');
+    
+            if ($_FILES['profile_pic']['name']) {
+                $config['upload_path'] = './public/assets/images/users/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['max_size'] = 2048;
+                $this->load->library('upload', $config);
+                if ($this->upload->do_upload('profile_pic')) {
+                    $data = $this->upload->data();
+                    $profile_pic = $data['file_name'];
+                } else {
+                    $profile_pic = 'noimages.jpg';
+                }
             } else {
                 $profile_pic = 'noimages.jpg';
             }
-        } else {
-            $profile_pic = 'noimages.jpg';
+            $status = 1;
+            $data = array(
+                'complete_name' => $complete_name,
+                'email' => $email,
+                'pword' => $pword,
+                'sex' => $sex,
+                'profile_pic' => $profile_pic,
+                'status' => $status,
+                'address' => $address,
+                'description' => $description,
+                'contact_num' => $contact_num,
+                'title' => $title,
+                'description' => $description,
+                'status' => 0
+            );
+            $inserted = $this->db->insert('evaluator', $data);
+            if ($inserted) {
+                $response = array('status' => 'success');
+                redirect('users/home');
+            } else {
+                $response = array('status' => 'error', 'message' => 'Failed to add user.');
+            }
+            echo json_encode($response);
+            return;
         }
-        $status = 1;
-        $data = array(
-            'complete_name' => $complete_name,
-            'email' => $email,
-            'pword' => $pword,
-            'sex' => $sex,
-            'profile_pic' => $profile_pic,
-            'status' => $status
-        );
-        $inserted = $this->db->insert('users', $data);
-        if ($inserted) {
-            $response = array('status' => 'success');
-            redirect('users/home');
-        } else {
-            $response = array('status' => 'error', 'message' => 'Failed to add user.');
-        }
-        echo json_encode($response);
-        return;
+        $data['users_content'] = 'users/adduser';
+        $this->load->view($data['users_content'], $data);
     }
-    $data['users_content'] = 'users/adduser';
-    $this->load->view($data['users_content'], $data);
-}		
+    
+
+
+
+
+
+
+
+
+
+
+
 
 public function delete($userid) {
     // Load the User_model
@@ -94,7 +116,6 @@ public function view_details($userid) {
     $data['title'] = 'User Profile';
     
 }
-
 public function edituser($userid) {
     // Load the User_model
     $this->load->model('User_model');
@@ -107,30 +128,45 @@ public function edituser($userid) {
         show_404(); // User not found, show 404 page
     }
 
-
     if ($this->input->server('REQUEST_METHOD') === 'POST') {
         $userData = [
             'complete_name' => $this->input->post('complete_name'),
             'email' => $this->input->post('email'),
-            'profile_pic' => $this->input->post('profile_pic'), 
             'status' => $this->input->post('status'), 
             'sex' => $this->input->post('sex'), 
-            
+            'description' => $this->input->post('description'), 
+            'address' => $this->input->post('address'), 
         ];
 
-        
+        // Check if a new profile picture is uploaded   
+        if (!empty($_FILES['profile_pic']['name'])) {
+            $config['upload_path'] = './public/assets/images/users/';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['max_size'] = 2048;  // 2MB limit
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('profile_pic')) {
+                $data = $this->upload->data();
+                $userData['profile_pic'] = $data['file_name'];
+            } else {
+                $error = $this->upload->display_errors();
+                // Handle the upload error properly
+                echo json_encode(['status' => 'error', 'message' => $error]);
+                return;
+            }
+        }
+
         if ($this->User_model->editUser($userid, $userData)) {
             redirect('users/home');
         } else {
-      
+            // Handle edit failure
         }
     }
 
- 
     $this->load->view('users/updateuser_details', $data); 
     $data['title'] = 'User Profile';
-    
 }
+
 
 
 
@@ -188,57 +224,69 @@ public function edituser($userid) {
        
     }
 
-    public function addauthor() {   
+    public function addauthor() {
+        // Check if the request is a POST request
         if ($this->input->post()) {
-            $complete_name = $this->input->post('complete_name');          
+            // Collect data from the POST request
+            $complete_name = $this->input->post('complete_name');
             $email = $this->input->post('email');
+            $pword = $this->input->post('pword');  // Consider hashing the password
             $contact_num = $this->input->post('contact_num');
             $title = $this->input->post('title');
-            $sex = $this->input->post('sex'); 
-
-
-
+            $sex = $this->input->post('sex');
+            $address = $this->input->post('address');
+            $description = $this->input->post('description');  // Fixed: was incorrectly set to 'address'
     
-            if ($_FILES['profile_pic']['name']) {
-                $config['upload_path'] = './assets/images/users/';
+            // Initialize profile picture filename
+            $profile_pic = 'noimage.jpg';  // Changed filename to 'noimage.jpg' for consistency
+    
+            // Check if a file was uploaded
+            if (!empty($_FILES['profile_pic']['name'])) {
+                $config['upload_path'] = './public/assets/images/users/';
                 $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['max_size'] = 2048;
+                $config['max_size'] = 2048;  // 2MB limit
                 $this->load->library('upload', $config);
+    
                 if ($this->upload->do_upload('profile_pic')) {
                     $data = $this->upload->data();
-                    $profile_pic = $data['file_name'];
+                    $profile_pic = $data['file_name'];  // Only storing the filename
                 } else {
-                    $profile_pic = 'noimages.jpg';
+                    $error = $this->upload->display_errors();
+                    // Handle the upload error properly
+                    echo json_encode(['status' => 'error', 'message' => $error]);
+                    return;
                 }
-            } else {
-                $profile_pic = 'noimages.jpg';
             }
     
+            // Prepare data for insertion
             $data = array(
                 'complete_name' => $complete_name,
                 'email' => $email,
+                'pword' => $pword,  // Consider encrypting this
                 'sex' => $sex,
                 'contact_num' => $contact_num,
                 'profile_pic' => $profile_pic,
                 'title' => $title,
-                
-              
+                'address' => $address,
+                'description' => $description,
+                'status' => 0
             );
+    
+            // Insert data into the database
             $inserted = $this->db->insert('authors', $data);
             if ($inserted) {
-                $response = array('status' => 'success');
-                redirect('users/authors');
+                redirect('users/authors');  // Assuming success redirect
             } else {
-                $response = array('status' => 'error', 'message' => 'Failed to add authors.');
+                echo json_encode(['status' => 'error', 'message' => 'Failed to add author.']);
+                return;
             }
-            echo json_encode($response);
-            return;
+        } else {
+            // If not a POST request, load the view
+            $data['users_content'] = 'users/authors';
+            $this->load->view($data['users_content'], $data);
         }
-        $data['users_content'] = 'users/authors';
-        $this->load->view($data['users_content'], $data);
-    }		
-
-
+    }
+    
 
 
 
@@ -286,46 +334,47 @@ public function edituser($userid) {
     
     
 
-    public function editAuthor($auid) {
-        // Load the User_model
-        $this->load->model('Author_model');
-        
-        // Retrieve user data by user id
-        $data['authors'] = $this->Author_model->get_author_by_id($auid);
+public function editAuthor($auid) {
+    // Load the Author_model
+    $this->load->model('Author_model');
     
-        // Check if user data is retrieved
-        if (!$data['authors']) {
-            show_404(); // User not found, show 404 page
-        }
-    
-    
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
-            $userData = [
-                'complete_name' => $this->input->post('complete_name'),
-                'email' => $this->input->post('email'),
-                'profile_pic' => $this->input->post('profile_pic'), 
-                'sex' => $this->input->post('sex'), 
-                'contact_num' => $this->input->post('contact_num'),
-                'title' => $this->input->post('title'), 
-            ];
-    
-            
-            if ($this->Author_model->editAuthor($auid, $userData)) {
-                redirect('users/authors ');
-            } else {
-          
-            }
-        }
-    
-     
-        $this->load->view('users/author/updateauthor_details', $data); 
-        $data['title'] = 'User Profile';
-        
+    // Retrieve author data by author id
+    $data['authors'] = $this->Author_model->get_author_by_id($auid);
+
+    // Check if author data is retrieved
+    if (!$data['authors']) {
+        show_404(); // Author not found, show 404 page
     }
-    
 
+    if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        $userData = [
+            'complete_name' => $this->input->post('complete_name'),
+            'email' => $this->input->post('email'),
+            'sex' => $this->input->post('sex'), 
+            'contact_num' => $this->input->post('contact_num'),
+            'title' => $this->input->post('title'), 
+            'address' => $this->input->post('address'), 
+            'description' => $this->input->post('description'), 
+            'status' => $this->input->post('status'), 
 
+        ];
 
+        // Check if a new profile picture is uploaded   
+        if (!empty($_FILES['profile_pic']['name'])) {
+            // Handle profile picture upload
+            // Update $userData['profile_pic'] with the new file name
+        }
+
+        if ($this->Author_model->editAuthor($auid, $userData)) {
+            redirect('users/authors');
+        } else {
+            // Handle edit failure
+        }
+    }
+
+    $this->load->view('users/author/updateauthor_details', $data); 
+    $data['title'] = 'User Profile';
+}
 
 
 
@@ -383,7 +432,7 @@ public function edituser($userid) {
 public function article()
 {
     $data['article_content'] = 'users/article';
-
+    $this->db->order_by('title', 'ASC');
     // Load the Article_model
     $this->load->model('Article_model');
 
@@ -420,7 +469,6 @@ public function addarticle() {
     $data['volumes'] = $this->Article_model->get_volumes();
     $data['authors'] = $this->Article_model->get_authors();
     $data['users'] = $this->Article_model->get_users(); 
-    $data['volumes'] = $this->Article_model->get_volumes();
 
     if (empty($data['volumes']) || empty($data['authors'])) {
         echo "No volumes or authors found!";
@@ -436,8 +484,31 @@ public function addarticle() {
             'doi' => $this->input->post('doi'),
             'volumeid' => $this->input->post('volumeid'),
             'auid' => $this->input->post('auid'), 
-            'published' => 0
+            'published' => 0,
+            'assign' => 0,
         ];
+
+        // Check if a file was uploaded
+        if (!empty($_FILES['filename']['name'])) {
+            $config['upload_path'] = './public/assets/files';
+            $config['allowed_types'] = 'pdf';
+            $config['max_size'] = 2048;  // 2MB limit
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('filename')) {
+                $fileData = $this->upload->data();
+                $filename = $fileData['file_name'];  
+                // Assign the filename to the article data
+                $articleData['filename'] = $filename;
+            } else {
+                $error = $this->upload->display_errors();
+                // Log the error for debugging
+                error_log('File upload error: ' . $error);
+                // Handle the upload error properly
+                echo json_encode(['status' => 'error', 'message' => $error]);
+                return;
+            }
+        }
 
         // Insert data into database
         if ($this->db->insert('articles', $articleData)) {
@@ -452,6 +523,10 @@ public function addarticle() {
     $this->load->view('users/add_article', $data); 
     $this->load->view('Templates/sidebarfooter.php');
 }
+
+
+
+
 
 public function deletearticle($articleid) {
     $this->load->model('Article_model');
@@ -470,6 +545,8 @@ public function getArticleDetails($articleid) {
     $data['title'] = 'Article'; 
     $this->load->view('users/article/view_articledetails', $data);
 }
+
+
 
 
 public function editArticle($articleid) {
@@ -494,6 +571,7 @@ public function editArticle($articleid) {
             'volumeid' => $this->input->post('volumeid'),
             'auid' => $this->input->post('auid'),
             'published' =>  $this->input->post('published'),
+            'date_published' => ($this->input->post('published') == 1) ? date('Y-m-d H:i:s') : NULL,
         ];
 
         
@@ -552,8 +630,8 @@ public function assignarticle($articleid) {
 public function manageassign($articleid) {
     $this->load->model('Article_model');
     $data['article_assigned'] = $this->Article_model->manageassign($articleid);
-    $data['authors'] = $this->Article_model->get_authors(); 
-
+    $data['users'] = $this->Article_model->get_users();
+    $data['articleid'] = $articleid; // Pass the article ID to the view
 
     if (empty($data['article_assigned'])) {
         show_404();
@@ -565,28 +643,32 @@ public function manageassign($articleid) {
 
 
     public function delete_assignment($auid) {
-        // Load the Author_model
+        
         $this->load->model('Article_model');
         
-        // Call the deleteauthor method from the loaded model
+       
         $deleteResult = $this->Article_model->delete_assignment($auid);
 
         redirect('users/article#');
     }
     
 
-
-
-
-
-
-
-
-
-
-
-
-
+    public function editAssignArticle($articleid) {
+        $this->load->model('Article_model');
+        $userid = $this->input->post('userid');
+        
+        if ($userid) {
+            // Assuming $userid is already an array, if not, convert it to an array
+            if (!is_array($userid)) {
+                $userid = [$userid];
+            }
+            
+            $this->Article_model->assign_articles($articleid, $userid);
+        }
+        
+        redirect('users/article'); // Redirect to a suitable page after update
+    }
+    
 
 
 //volume

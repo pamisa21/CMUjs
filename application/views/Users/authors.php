@@ -128,6 +128,17 @@
             border-color: #0056b3;
             color: #fff;
         }   
+        .publish-status {
+                color: green; /* Example styling for publish status */
+            }
+
+            .unpublish-status {
+                color: red; /* Example styling for unpublish status */
+            }
+
+            .archive-status {
+                color: gray; /* Example styling for archive status */
+            }
     </style>
 </head>
 <body>
@@ -145,39 +156,56 @@
          <table>
         <thead>
             <tr>
+                <th>Profile</th> <!-- New column for profile pictures -->
                 <th>Title</th>
                 <th>Author Name</th>
                 <th>Sex</th>
                 <th>Email</th>
                 <th>Contact Number</th>
+                <th>Status</th>
                 <th style="text-align: center;">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($users as $author): ?>
                 <tr>
+                    <td>
+                        <!-- Check if image exists and display, otherwise show a placeholder -->
+                        <img src="<?php echo file_exists('./public/assets/images/users/' . $author['profile_pic']) ? base_url('./public/assets/images/users/' . $author['profile_pic']) : base_url('./public/assets/images/users/noimage.png'); ?>" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </td>
                     <td><?php echo $author['title']; ?></td>
                     <td><?php echo $author['complete_name']; ?></td>
                     <td><?php echo $author['sex'] == 1 ? 'Male' : 'Female'; ?></td>
                     <td><?php echo $author['email']; ?></td>
                     <td><?php echo $author['contact_num']; ?></td>
-                    <td class="action">
-                        <!-- <a href="#" class="viewbutton" id="view_<?php echo $author['auid']; ?>" onclick="getAuthorDetails(<?php echo $author['auid']; ?>)">
-                        <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 10px;"></span>
-                        </a> -->
+                    <td>
+                            <?php
+                            $status = $author['status'];
+                            if ($status == 1) {
+                                echo '<span class="publish-status">Active</span>';
+                            } elseif ($status == 0) {
+                                echo '<span class="unpublish-status">NotActive</span>';
+                            }
+                            ?>
+                        </td>
+                        <td class="action">
                         <a href="#" class="viewbutton" id="view_<?php echo $author['auid']; ?>" onclick="getAuthorDetails(<?php echo $author['auid']; ?>)">
-                        <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 10px;"></span>
+                            <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 10px;"></span>
                         </a>
-                        <a href="#" class="editButton" id="edit<?php echo $author['auid']; ?>" onclick="editAuthor(<?php echo $author['auid']; ?>)"><span class="glyphicon glyphicon-pencil icon" style="margin-right: 15px;"></span></a>
-                        <a href="#" class="deleteButton" id="delete_<?php echo $author['auid']; ?>" onclick="deleteauthor(<?php echo $author['auid']; ?>)"><span class="glyphicon glyphicon-trash icondelete" style="margin-right: 10px;"></span></a>
+                        <a href="#" class="editButton" id="edit_<?php echo $author['auid']; ?>" onclick="editAuthor(<?php echo $author['auid']; ?>)">
+                            <span class="glyphicon glyphicon-pencil icon" style="margin-right: 15px;"></span>
+                        </a>
+                        <a href="#" class="deleteButton" id="delete_<?php echo $author['auid']; ?>" onclick="deleteauthor(<?php echo $author['auid']; ?>)">
+                            <span class="glyphicon glyphicon-trash icondelete" style="margin-right: 10px;"></span>
+                        </a>
                     </td>
-
                 </tr>
             <?php endforeach; ?>
         </tbody>
         </table>
     </div>
 </div>
+
 
 <div id="authorDetailsModal" class="modal">
     <div class="modal-content">
@@ -209,15 +237,29 @@
                 </div>
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="complete_name" class="form-control form-control-line" placeholder="Enter your full name">
+                    <input type="text" name="complete_name" class="form-control form-control-line" placeholder="Enter Authors full name">
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" class="form-control form-control-line" placeholder="Enter your email">
+                    <input type="email" name="email" class="form-control form-control-line" placeholder="Enter Authors Email">
                 </div>
                 <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="pword" class="form-control form-control-line" placeholder="Enter  Authors  Password">
+                </div>
+
+                <div class="form-group">
                     <label>Contact</label>
-                    <input type="number" name="contact_num" class="form-control form-control-line" placeholder="Enter your Phone Number">
+                    <input type="number" name="contact_num" class="form-control form-control-line" placeholder="Enter Authors Phone Number">
+                </div>
+                <div class="form-group">
+                    <label>Authors Description</label>
+                    <input type="description" name="description" class="form-control form-control-line" placeholder="Enter Authors Description">
+                </div>
+
+                <div class="form-group">
+                    <label>Authors Address</label>
+                    <input type="address" name="address" class="form-control form-control-line" placeholder="Enter Authors Address">
                 </div>
                 <div class="form-group">
                 <label>Sex:</label>

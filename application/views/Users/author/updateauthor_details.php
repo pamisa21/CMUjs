@@ -59,25 +59,37 @@
 <body>
     <div class="user-center">
         <?php if (!empty($authors)) : ?>
-            <form method="post" action="<?php echo base_url('users/editAuthor/'.$authors['auid']); ?>">
-                <div class="user-form-group">
+            <form method="post" action="<?php echo base_url('users/editAuthor/'.$authors['auid']); ?>" enctype="multipart/form-data">
+                <!-- <div class="user-form-group">
                     <label for="profile_pic">Profile Picture:</label>
                     <img class="user-img" src="<?php echo htmlspecialchars($authors['profile_pic']); ?>" alt="Profile Picture">
                     <input type="file" id="profile_pic" name="profile_pic">
-                </div>
+                </div> -->
                 <div class="user-form-group">
-                    <label for="complete_name">authors Name:</label>
+                    <label for="complete_name">Author Complete Name:</label>
                     <input type="text" id="complete_name" name="complete_name" value="<?php echo htmlspecialchars($authors['complete_name']); ?>">
                 </div>
                 <div class="user-form-group">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($authors['email']); ?>">
                 </div>
+                
                 <div class="user-form-group">
                     <label for="contact_num">Contact Number:</label>
                     <input type="text" id="contact_num" name="contact_num" value="<?php echo htmlspecialchars($authors['contact_num']); ?>">
                 </div>
 
+                <div class="user-form-group">
+                    <label for="description">Authors Description</label>
+                    <textarea id="description" name="description" rows="4" cols="50"><?php echo htmlspecialchars($authors['description']);?></textarea>
+                </div>
+
+
+                <div class="user-form-group">
+                    <label for="address">Authors Address></label>
+                    <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($authors['address']); ?>">
+                </div>
+                
                 <div class="user-form-group">
                     <label for="title">Title:</label>
                     <select id="title" name="title">
@@ -87,7 +99,15 @@
 
                     </select>
                 </div>
-    
+
+                <div class="user-form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="1" <?php echo ($authors['status'] == 1) ? 'selected' : ''; ?>>Active</option>
+                    <option value="0" <?php echo ($authors['status'] == 0) ? 'selected' : ''; ?>>Not Active</option>
+                </select>
+                </div>
+
 
                 <div class="user-form-group user-radio-group">
                     <label>Sex:</label>

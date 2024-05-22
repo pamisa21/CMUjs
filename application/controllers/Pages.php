@@ -68,6 +68,33 @@ class Pages extends CI_Controller {
     
     
 	
+public function viewpublicarticle($articleid) {
+    $this->load->model('Particle_model');
+    $data['article'] = $this->Particle_model->viewpublicarticle($articleid);
+
+    if (!$data['article']) {
+        show_404();
+    }
+    $data['title'] = 'Article'; 
+    $this->load->view('pages/view_articledetails', $data);
+}
+
+public function viewpublicvolume($volumeid) {
+    $this->load->model('Particle_model');
+    $data['volumes'] = $this->Particle_model->viewpublicvolume($volumeid);
+
+    if (!$data['volumes']) {
+        show_404();
+    }
+    $data['title'] = 'volumes'; 
+    $this->load->view('pages/view_volumedetails', $data);
+}
+
+
+
+
+
+
     }
 
 

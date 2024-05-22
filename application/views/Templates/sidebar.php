@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Bootstrap CSS CDN -->
+    <script src="<?php echo base_url('public/assets/js/ckeditor.js'); ?>"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="<?php echo base_url('public/assets/css/sidebar.css'); ?>">

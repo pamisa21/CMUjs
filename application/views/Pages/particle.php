@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-
+/* Add your existing CSS here */
 .content {
     position: relative; 
     margin-left: 40px;
@@ -162,21 +162,22 @@
 }
 .buttoninfo {
   margin-top: 20px;
-  margin-left: 60px;
+    
   border-radius: 50px;
   
 }
 .viewinfo {
   border-radius: 10px;
   height: 25px;
-  background-color: white;
-  color: #138143;
+  background-color: black;
+  color: white;
+  width: 200px;
 }
 .viewinfo:hover {
   border-radius: 10px;
   height: 25px;
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
 }
 .viewmore {
   border-radius: 10px;
@@ -218,16 +219,62 @@
     color: blue;
     text-decoration-line: underline;
 }
+.Volname{
+    color: #138143;
+    text-align: left;
+    margin-top: -100px;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    border-radius: 8px; 
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}.viewinfo{
+    margin-left: 20px;
+}
 </style>
 </head>
 <body>
     
 <div class="content">
+    
     <div class="column column-1">
         <?php foreach ($articles as $article): ?>
+        <!-- <h1 class="Volume"><?php echo $article['vol_name']; ?></h1> -->
         <div class="card">
             <div class="profile">
-                <img class="author-img" src="public/assets/images/767.jpg" alt="Author Profile Image">
+          
+                <img class="author-img" src="<?php echo file_exists('./public/assets/images/users/' . $article['profile_pic']) ? base_url('./public/assets/images/users/' . $article['profile_pic']) : base_url('./public/assets/images/users/noimage.png'); ?>" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
                 <div class="author-info">
                     <p class="author-name"><?php echo $article['complete_name']; ?></p>
                     <p class="author-position" style="margin-top:-2px"><?php echo $article['email']; ?></p>
@@ -236,17 +283,30 @@
             <div class="images">
                 <img src="public/assets/images/767.jpg" alt="">
             </div>
+           
             <div class="articlebio">
                 <p class="Title"><?php echo $article['title']; ?></p>
                 <p class="doi"><a href="<?php echo $article['doi']; ?>"><?php echo $article['doi']; ?></a></p>
-
+                <p class="Volname"><?php echo $article['vol_name']; ?></p>
                 <p class="description"><?php echo $article['keywords']; ?></p>
+                <?php if (!empty($article['filename'])): ?>
+                            <a href="<?php echo base_url('public/assets/files/' . $article['filename']); ?>" target="_blank">
+                                <img src="<?php echo base_url('public/assets/files/pdficon.png'); ?>" alt="PDF" width="40" height="40">
+                            </a>
+                        <?php else: ?>
+                            No file uploaded
+                        <?php endif; ?>
                 <div class="buttoninfo">
-                    <button class="viewinfo">View Info?</button>
-                    <button class="viewmore">View More?</button>
+                    
+                <button class="viewinfo" onclick="viewpublicarticle(<?php echo $article['articleid']; ?>)">
+                    <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 10px;"></span>
+                    View Info
+                </button>
+
                 </div>
             </div>
         </div>
+        <br>
         <?php endforeach; ?>
     </div>
     <div class="column column-2 small-volume">
@@ -263,15 +323,56 @@
     </div>
 </div>
 
+<!-- The Modal -->
+<div id="articleModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="modalContent">
+      <!-- Article details will be loaded here dynamically -->
+      <button id="modalCloseButton" class="viewmore">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
-    function showArticle(volumeName) {
-        // Implement JavaScript function to handle article display based on volume
-        alert('Showing articles for ' + volumeName);
+    // Get the modal
+    var modal = document.getElementById("articleModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // Get the close button inside the modal content
+    var closeButton = document.getElementById("modalCloseButton");
+
+    // When the user clicks the button, open the modal 
+    function viewpublicarticle(auid) {
+        // Fetch article details using AJAX or Fetch API
+        fetch(`http://127.0.0.1:5500/pages/viewpublicarticle/${auid}`)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("modalContent").innerHTML = data + document.getElementById("modalCloseButton").outerHTML;
+            modal.style.display = "block";
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks on the close button inside the modal content, close the modal
+    closeButton.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
-
-
-
 
 
 </body>

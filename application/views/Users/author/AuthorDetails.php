@@ -78,6 +78,24 @@
                     <label for="sex">Sex:</label>
                     <input type="text" id="sex" name="sex" value="<?php echo ($author['sex'] == 'male') ? 'Male' : 'Female'; ?>" readonly>
                 </div>
+                <div class="user-form-group">
+                    <label for="description">Authors Description:</label>
+                    <input type="text" id="description" name="description" value="<?php echo htmlspecialchars($author['description']); ?>" readonly>
+                </div>                
+                <div class="user-form-group">
+                    <label for="address">Authors Address></label>
+                    <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($author['address']); ?>" readonly>
+                </div>
+                <div class="user-form-group">
+                    <label for="status">Authors status</label>
+                    <?php
+                    $status = $author['status']; // Assuming $author['status'] contains the status value
+                    $statusText = ($status == 1) ? 'ACTIVE' : 'NOTACTIVE';
+                    ?>
+                    <input type="text" id="status" name="status" value="<?php echo htmlspecialchars($statusText); ?>" readonly>
+                </div>
+
+                        
             </form>
         <?php else : ?>
             <p>Author not found.</p>

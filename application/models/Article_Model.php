@@ -9,9 +9,9 @@ class Article_Model extends CI_Model
     public function get_article()
     {
         // Perform inner join between articles, authors, and volume tables
-        $this->db->select('articles.*, authors.complete_name AS complete_name, volume.vol_name');
+        $this->db->select('articles.*, COALESCE(authors.complete_name, "unknown") AS complete_name, volume.vol_name');
         $this->db->from('articles');
-        $this->db->join('authors', 'articles.auid = authors.auid', 'inner');
+        $this->db->join('authors', 'articles.auid = authors.auid', 'left'); // Use left join to handle cases where author's name is not found
         $this->db->join('volume', 'articles.volumeid = volume.volumeid', 'inner');
         
         // Order by volume_id in ascending order
@@ -29,11 +29,11 @@ class Article_Model extends CI_Model
             return array();
         }
     }
-
+    
     public function get_volumes()
     {
         $this->db->select('volumeid, vol_name, status');
-        $this->db->where('status', 2); 
+        // $this->db->where('status', 2); 
         $query = $this->db->get('volume');
         
         if ($query->num_rows() > 0) {
@@ -68,15 +68,16 @@ class Article_Model extends CI_Model
     }
 
     public function get_article_by_id($articleid) {
-        $this->db->select('articles.*, authors.complete_name AS complete_name, volume.volumeid, volume.vol_name, evaluator.complete_name');
+        $this->db->select('articles.*, COALESCE(authors.complete_name, "unknown") AS complete_name, volume.volumeid, volume.vol_name, evaluator.complete_name');
         $this->db->from('articles');
-        $this->db->join('authors', 'articles.auid = authors.auid', 'inner');
+        $this->db->join('authors', 'articles.auid = authors.auid', 'left');
         $this->db->join('volume', 'articles.volumeid = volume.volumeid', 'left');
         $this->db->join('evaluator', 'articles.userid = evaluator.userid', 'left');
         $this->db->where('articles.articleid', $articleid);
         $query = $this->db->get();
         return $query->row_array(); 
     }
+    
 
     public function editArticle($articleid, $data) {
         $this->db->where('articleid', $articleid);
@@ -96,17 +97,29 @@ class Article_Model extends CI_Model
     //     return $this->db->insert_batch('article_assigned', $data);
     // }
 
-    public function get_users()
-    {
+    // public function get_users()
+    // {
+    //     $this->db->select('userid, complete_name');
+    //     $this->db->where('status', 1); 
+    //     $query = $this->db->get('evaluator');
+    //     if ($query->num_rows() > 0) {
+    //         return $query->result_array();
+    //     } else {
+    //         return array();
+    //     }
+    // }
+
+    public function get_users() {
         $this->db->select('userid, complete_name');
         $this->db->where('status', 1); 
         $query = $this->db->get('evaluator');
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() > 0) {           
             return $query->result_array();
         } else {
             return array();
         }
     }
+    
 
     public function get_article_by_userid($userid = 1)
     {
@@ -129,8 +142,8 @@ class Article_Model extends CI_Model
         // Delete previous assignments
         $this->db->where('articleid', $articleid);
         $this->db->delete('article_assigned');
-    
-        // Insert new assignments
+
+
         $data = [];
         foreach ($userids as $userid) {
             $data[] = [
@@ -163,19 +176,19 @@ class Article_Model extends CI_Model
             return array();
         }
     }
-    public function manageassign($articleid) {
-        $this->db->select('article_assigned.*, evaluator.complete_name');
-        $this->db->from('article_assigned');
-        $this->db->join('evaluator', 'article_assigned.userid = evaluator.userid', 'inner');
-        $this->db->where('article_assigned.articleid', $articleid);
-        $query = $this->db->get();
-        
-        if ($query->num_rows() > 0) {
-            return $query->result_array();
-        } else {
-            return array();
-        }
+ public function manageassign($articleid) {
+    $this->db->select('article_assigned.*, evaluator.complete_name');
+    $this->db->from('article_assigned');
+    $this->db->join('evaluator', 'article_assigned.userid = evaluator.userid', 'inner');
+    $this->db->where('article_assigned.articleid', $articleid);
+    $query = $this->db->get();
+    
+    if ($query->num_rows() > 0) {
+        return $query->result_array();
+    } else {
+        return array();
     }
+}
 
     public function delete_assignment($assignment) {
         $this->db->where('assigned_id', $assignment);

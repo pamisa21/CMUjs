@@ -36,7 +36,7 @@ class User_Model extends CI_Model
     }
 
     public function get_user_by_id($userid) {
-        $this->db->select('evaluator.userid, evaluator.complete_name, evaluator.email, evaluator.profile_pic, evaluator.status, evaluator.date_created,evaluator.sex');
+        $this->db->select('evaluator.userid, evaluator.complete_name, evaluator.email, evaluator.profile_pic, evaluator.status, evaluator.date_created,evaluator.sex,evaluator.description,evaluator.address,evaluator.title,evaluator.contact_num');
         $this->db->from('evaluator');
         // $this->db->join('authors', 'authors.auid = evaluator.auid', 'left');
         $this->db->where('evaluator.userid', $userid);
