@@ -274,7 +274,7 @@
         <div class="card">
             <div class="profile">
           
-                <img class="author-img" src="<?php echo file_exists('./public/assets/images/users/' . $article['profile_pic']) ? base_url('./public/assets/images/users/' . $article['profile_pic']) : base_url('./public/assets/images/users/noimage.png'); ?>" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
+                <img class="author-img" src="<?php echo file_exists('/public/assets/images/users/' . $article['profile_pic']) ? base_url('./public/assets/images/users/' . $article['profile_pic']) : base_url('./public/assets/images/users/noimage.png'); ?>" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
                 <div class="author-info">
                     <p class="author-name"><?php echo $article['complete_name']; ?></p>
                     <p class="author-position" style="margin-top:-2px"><?php echo $article['email']; ?></p>
@@ -310,7 +310,7 @@
         <?php endforeach; ?>
     </div>
     <div class="column column-2 small-volume">
-        <h3 class="volumelabel">List of Volume</h3>
+        <h3 class="volumelabel">List of Pubished Volume</h3>
         <div class="volume">
             <ul id="volumeList">
                 <?php foreach ($volumes as $volume): ?>
@@ -326,10 +326,10 @@
 <!-- The Modal -->
 <div id="articleModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <!-- <span class="close">&times;</span> -->
     <div id="modalContent">
       <!-- Article details will be loaded here dynamically -->
-      <button id="modalCloseButton" class="viewmore">Close</button>
+      <button id="modalCloseButton" class="viewmore"></button>
     </div>
   </div>
 </div>
@@ -347,7 +347,7 @@
     // When the user clicks the button, open the modal 
     function viewpublicarticle(auid) {
         // Fetch article details using AJAX or Fetch API
-        fetch(`http://127.0.0.1:5500/pages/viewpublicarticle/${auid}`)
+        fetch(`http://localhost:81/demo/pages/viewpublicarticle/${auid}`)
         .then(response => response.text())
         .then(data => {
             document.getElementById("modalContent").innerHTML = data + document.getElementById("modalCloseButton").outerHTML;

@@ -145,7 +145,7 @@
 
 <div class="container">
     <div class="title">
-        <h2>Manage Users</h2>
+        <h2>Manage Auhtors</h2>
         <h4>April 30, 2024</h4>
         <div class="add-button">
             <button onclick="openModal()">Add Author</button>
@@ -274,6 +274,7 @@
                     <option value="Mrs.">Mrs.</option>
                     <option value="Dr.">Dr.</option>
                 </select>
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -309,7 +310,7 @@
     
     
     function get_author_by_id(auid) {
-            window.location.href = `http://127.0.0.1:5500/users/viewauthor_details/${auid}`
+            window.location.href = `http://localhost:81/demo/users/viewauthor_details/${auid}`
         
     }  
 
@@ -318,14 +319,14 @@
     function getAuthorDetails(auid) {
     
 
-    window.location.href = `http://127.0.0.1:5500/users/view_authordetails/${auid}`; 
+    window.location.href = `http://localhost:81/demo/users/view_authordetails/${auid}`; 
 }   
 </script> -->
 
 <script>
     function getAuthorDetails(auid) {
         // Make an AJAX request to fetch user details
-        fetch(`http://127.0.0.1:5500/users/viewauthor_details/${auid}`)
+        fetch(`http://localhost:81/demo/users/viewauthor_details/${auid}`)
             .then(response => response.text())
             .then(html => {
                 // Display user details in the modal
@@ -346,19 +347,19 @@
     }
     function deleteauthor(auid) {
         if (confirm('Are you sure you want to delete this Author?')) {
-            window.location.href = `http://127.0.0.1:5500/users/deleteauthor/${auid}`
+            window.location.href = `http://localhost:81/demo/users/deleteauthor/${auid}`
         }
     }
     //   function editAuthor(auid) {
     //     if (confirm('Are you sure you want to edit this author?')) {
-    //         window.location.href = `http://127.0.0.1:5500/users/editauthor/${auid}`
+    //         window.location.href = `http://localhost:81/demo/users/editauthor/${auid}`
     //     }
     // }   
 </script>
 <script>
     function editAuthor(auid) {
         // Make an AJAX request to fetch user details
-        fetch(`http://127.0.0.1:5500/users/editAuthor/${auid}`)
+        fetch(`http://localhost:81/demo/users/editAuthor/${auid}`)
             .then(response => response.text())
             .then(html => {
                 // Display user details in the modal

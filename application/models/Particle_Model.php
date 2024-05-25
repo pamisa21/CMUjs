@@ -15,7 +15,7 @@
             $this->db->join('volume', 'volume.volumeid = articles.volumeid');
             $this->db->join('authors', 'authors.auid = articles.auid', 'left'); 
             $this->db->order_by('vol_name', 'ASC');
-            $this->db->where('volume.status', 3);
+            $this->db->where('volume.status', 1);
             $this->db->where('articles.published', 1);
     
             if ($id !== FALSE) {
@@ -42,7 +42,7 @@
         {
             $this->db->select('*');
             $this->db->from('volume');
-            $this->db->where('status', 3);
+            $this->db->where('status', 1);
             $query = $this->db->get();
             return $query->result_array();
         }
@@ -69,6 +69,17 @@
         
             return $query->row_array();
         }
+
+        public function get_articles_by_volume($volumeid) {
+            $this->db->select('articles.*, authors.complete_name');
+            $this->db->from('articles');
+            $this->db->join('authors', 'articles.auid = authors.auid', 'left');
+            $this->db->where('articles.volumeid', $volumeid);
+            $this->db->where('articles.published', 1);
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        
     }        
     
     

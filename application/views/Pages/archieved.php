@@ -240,7 +240,6 @@
                     View Info
                 </button>
 
-                
                 </div>
             </div>
         </div>
@@ -248,7 +247,7 @@
 </div>
 
 <div class="column column-2 small-volume">
-    <h3 class="aricleLabel">List of Articles</h3>
+    <h3 class="aricleLabel">List of Articles in Archie</h3>
     <div class="volume">
         <?php foreach ($volumes as $volume): ?>
             <div class="volumearticle">
@@ -291,7 +290,7 @@
   
     function viewpublicvolume(volumeid) {
  
-        fetch(`http://127.0.0.1:5500/pages/viewpublicvolume/${volumeid}`)
+        fetch(`http://localhost:81/demo/pages/viewpublicvolume/${volumeid}`)
         .then(response => response.text())
         .then(data => {
             document.getElementById("modalContent").innerHTML = data + document.getElementById("modalCloseButton").outerHTML;

@@ -255,7 +255,6 @@
 
                 </div>
                 <div class="form-group">
-
                 <label for="title">Title:</label>
                 <select name="title" id="title" class="form-control">
                     <option value="Mr.">Mr.</option>
@@ -287,11 +286,11 @@
     
     function deleteUser(userid) {
         if (confirm('Are you sure you want to delete this user?')) {
-            window.location.href = `http://127.0.0.1:5500/users/delete/${userid}`
+            window.location.href = `http://localhost:81/demo/users/delete/${userid}`
         }
     }
     function get_user_by_id(userid) {
-            window.location.href = `http://127.0.0.1:5500/users/view_details/${userid}`
+            window.location.href = `http://localhost:81/demo/users/view_details/${userid}`
         
     }   
     // function editUser(userid) {
@@ -312,7 +311,7 @@
 <script>
     function getUserDetails(userid) {
         // Make an AJAX request to fetch user details
-        fetch(`http://127.0.0.1:5500/users/view_details/${userid}`)
+        fetch(`http://localhost:81/demo/users/view_details/${userid}`)
             .then(response => response.text())
             .then(html => {
                 // Display user details in the modal
@@ -331,7 +330,7 @@
 <script>
     function editUser(userid) {
         // Make an AJAX request to fetch user details
-        fetch(`http://127.0.0.1:5500/users/edituser/${userid}`)
+        fetch(`http://localhost:81/demo/users/edituser/${userid}`)
             .then(response => response.text())
             .then(html => {
                 // Display user details in the modal

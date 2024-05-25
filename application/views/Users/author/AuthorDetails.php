@@ -55,10 +55,6 @@
         <?php if (!empty($author)) : ?>
             <form>
                 <div class="user-form-group">
-                    <label for="profile_pic">Profile Picture:</label>
-                    <img class="user-img" src="<?php echo htmlspecialchars($author['profile_pic']); ?>" alt="Profile Picture">
-                </div>
-                <div class="user-form-group">
                     <label for="complete_name">Author Name:</label>
                     <input type="text" id="complete_name" name="complete_name" value="<?php echo htmlspecialchars($author['complete_name']); ?>" readonly>
                 </div>

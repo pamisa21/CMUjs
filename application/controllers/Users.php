@@ -275,7 +275,7 @@ public function edituser($userid) {
             // Insert data into the database
             $inserted = $this->db->insert('authors', $data);
             if ($inserted) {
-                redirect('users/authors');  // Assuming success redirect
+                redirect('users/authors');  
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to add author.']);
                 return;
@@ -703,7 +703,7 @@ public function addvolume() {
         $data = array(
             'vol_name' => $vol_name,
             'description' => $description,
-            'status' => $status
+            'status' => 2,
         );
 
         $inserted = $this->db->insert('volume', $data);

@@ -81,12 +81,18 @@ public function viewpublicarticle($articleid) {
 
 public function viewpublicvolume($volumeid) {
     $this->load->model('Particle_model');
+    
+    // Fetch volume details
     $data['volumes'] = $this->Particle_model->viewpublicvolume($volumeid);
 
     if (!$data['volumes']) {
         show_404();
     }
-    $data['title'] = 'volumes'; 
+
+    // Fetch articles for the specific volume
+    $data['articles'] = $this->Particle_model->get_articles_by_volume($volumeid);
+
+    $data['title'] = 'Volume Details'; 
     $this->load->view('pages/view_volumedetails', $data);
 }
 

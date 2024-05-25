@@ -157,7 +157,6 @@
                     <th>volumes Name</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Date Created</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -181,8 +180,9 @@
                         </td>
 
 
-                        <td><?php echo $volumes['date_at']; ?></td>
-                        <td class="action">
+                   
+                        <td class="action" style="width: 150px">
+
             
                         <a href="#" class="viewbutton" id="view_<?php echo $volumes['volumeid']; ?>" onclick="getVolumeDetails(<?php echo $volumes['volumeid']; ?>)">
                         <span class="glyphicon glyphicon-eye-open iconeye" style="margin-right: 10px;"></span>
@@ -234,18 +234,7 @@
                     <textarea id="descriptionInput" class="form-control" name="description" placeholder="Enter description"></textarea>
                 </div>
                       
-                <div class="form-group">
-                    <label>Status</label>
-                    <div>
-                        <label><input type="radio" name="status" value="1"> Published</label>
-                    </div>
-                    <div>
-                        <label><input type="radio" name="status" value="2"> Unpublished</label>
-                    </div>
-                    <div>
-                        <label><input type="radio" name="status" value="3"> Archived</label>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
@@ -266,7 +255,7 @@
     }
     function deletevolume(volumeid) {
         if (confirm('Are you sure you want to delete this volumes?')) {
-            window.location.href = `http://127.0.0.1:5500/users/deletevolume/${volumeid}`
+            window.location.href = `http://localhost:81/demo/users/deletevolume/${volumeid}`
         }
     }
 </script>
@@ -274,13 +263,13 @@
     function getVolumeDetails(volumeid) {
     
 
-    window.location.href = `http://127.0.0.1:5500/users/view_volumedetails/${volumeid}`; 
+    window.location.href = `http://localhost:81/demo/users/view_volumedetails/${volumeid}`; 
 }   
 </script> -->
 <script>
     function getVolumeDetails(volumeid) {
         // Make an AJAX request to fetch user details
-        fetch(`http://127.0.0.1:5500/users/view_volumedetails/${volumeid}`)
+        fetch(`http://localhost:81/demo/users/view_volumedetails/${volumeid}`)
             .then(response => response.text())
             .then(html => {
                 // Display user details in the modal
@@ -296,19 +285,19 @@
     }
      
     function get_volume_by_id(volumeid) {
-            window.location.href = `http://127.0.0.1:5500/users/view_volumedetails/${volumeid}`
+            window.location.href = `http://localhost:81/demo/users/view_volumedetails/${volumeid}`
         
     } 
      function editVolume(volumeid) {
         if (confirm('Are you sure you want to edit this volumes?')) {
-            window.location.href = `http://127.0.0.1:5500/users/editvolume/${volumeid}`
+            window.location.href = `http://localhost:81/demo/users/editvolume/${volumeid}`
         }
     }   
 </script>
 <script>
     function editVolume(volumeid) {
 
-        fetch(`http://127.0.0.1:5500/users/editvolume/${volumeid}`)
+        fetch(`http://localhost:81/demo/users/editvolume/${volumeid}`)
             .then(response => response.text())
             .then(html => {
 

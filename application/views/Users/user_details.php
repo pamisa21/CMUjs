@@ -53,15 +53,19 @@
     <div class="user-center">
         <?php if (!empty($user)) : ?>
             <form>
-
+<!-- 
             <div class="user-form-group">
                     <label for="profile_pic">Profile Picture:</label>
                     <img class="user-img" src="<?php echo htmlspecialchars($user['profile_pic']); ?>" alt="Profile Picture">
-                </div>
+                </div> -->
                 <div class="user-form-group">
                     <label for="title">Title:</label>
                     <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($user['title']); ?>" readonly>
+
+                
                 </div>
+
+        
                 <div class="user-form-group">
                     <label for="complete_name">Complete Name:</label>
                     <input type="text" id="complete_name" name="complete_name" value="<?php echo htmlspecialchars($user['complete_name']); ?>" readonly>

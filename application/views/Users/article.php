@@ -168,7 +168,8 @@
                     <th>DOI</th>
                     <th>Status</th>
                     <th>Assign</th>
-                    <th>Actions</th>
+                    <td class="action" style="width: 200px">
+
                 </tr>
             </thead>
             <tbody>
@@ -216,10 +217,10 @@
                         </a>
                         <?php if ($article['assign'] == 1): ?>
                             <a href="#" class="viewAssign" id="viewas<?php echo $article['articleid']; ?>" onclick="viewassign(<?php echo $article['articleid']; ?>)" title="View Assign Article">
-                                <span class="glyphicon glyphicon glyphicon-list-alt" style="margin-right: 2px;margin-left: 20px"></span>
+                                <span class="glyphicon glyphicon glyphicon-list-alt" style="margin-right: 10px;"></span>
                             </a>
                             <a href="#" class="manageassign" id="manageassign<?php echo $article['articleid']; ?>" onclick="manageassign(<?php echo $article['articleid']; ?>)" title="Manage Assign Article">
-                                <span class="glyphicon glyphicon glyphicon-cog" style="margin-right: 5px;margin-left: 10px"></span>
+                                <span class="glyphicon glyphicon glyphicon-cog" style="margin-right: 5px;"></span>
                             </a>
                         <?php endif; ?>
                     </td>
@@ -339,7 +340,7 @@
     }
     function deletearticle(articleid) {
         if (confirm('Are you sure you want to delete this Article?')) {
-            window.location.href = `http://127.0.0.1:5500/users/deletearticle/${articleid}`
+            window.location.href = `http://localhost:81/demo/users/deletearticle/${articleid}`
         }
     }
 </script>
@@ -347,13 +348,13 @@
     function getArticleDetails(articleid) {
     
 
-    window.location.href = `http://127.0.0.1:5500/users/getArticleDetails/${articleid}`; 
+    window.location.href = `http://localhost:81/demo/users/getArticleDetails/${articleid}`; 
 }   
 </script> -->
 <script>
     function getArticleDetails(articleid) {
 
-        fetch(`http://127.0.0.1:5500/users/getArticleDetails/${articleid}`)
+        fetch(`http://localhost:81/demo/users/getArticleDetails/${articleid}`)
             .then(response => response.text())
             .then(html => {
 
@@ -369,12 +370,12 @@
     }
      
     function get_article_by_id(articleid) {
-            window.location.href = `http://127.0.0.1:5500/users/view_articledetails/${articleid}`
+            window.location.href = `http://localhost:81/demo/users/view_articledetails/${articleid}`
         
     } 
     // function editArticle(articleid) {
     //     if (confirm('Are you sure you want to edit this Article?')) {
-    //         window.location.href = `http://127.0.0.1:5500/users/editarticle/${articleid}`
+    //         window.location.href = `http://localhost:81/demo/users/editarticle/${articleid}`
     //     }
     // }   
 </script>
@@ -382,7 +383,7 @@
 <script>
     function editArticle(articleid) {
         // Make an AJAX request to fetch user details
-        fetch(`http://127.0.0.1:5500/users/editarticle/${articleid}`)
+        fetch(`http://localhost:81/demo/users/editarticle/${articleid}`)
             .then(response => response.text())
             .then(html => {
                 // Display user details in the modal
@@ -400,14 +401,14 @@
 <!-- <script>
      function assignArticle(articleid) {
         if (confirm('Are you sure you want to Assign Article?')) {
-            window.location.href = `http://127.0.0.1:5500/users/updateassingarticle//${articleid}`
+            window.location.href = `http://localhost:81/demo/users/updateassingarticle//${articleid}`
         }assignarticle
     }  
 </script> -->
 <script>
     function assignArticle(articleid) {
         // Make an AJAX request to fetch user details
-        fetch(`http://127.0.0.1:5500/users/assignarticle/${articleid}`)
+        fetch(`http://localhost:81/demo/users/assignarticle/${articleid}`)
             .then(response => response.text())
             .then(html => {
                 // Display user details in the modal
@@ -425,13 +426,13 @@
 
     function viewassign(articleid) {
         if (confirm('Are you sure you want to View Assign  Article?')) {
-            window.location.href = `http://127.0.0.1:5500/users/viewassign/${articleid}`
+            window.location.href = `http://localhost:81/demo/users/viewassign/${articleid}`
         }
     }   
 
 
     function viewassign(articleid) {
-        fetch(`http://127.0.0.1:5500/users/viewassign/${articleid}`)
+        fetch(`http://localhost:81/demo/users/viewassign/${articleid}`)
             .then(response => response.text())
             .then(html => {
                 document.getElementById('viewassingarticle').innerHTML = html;
@@ -448,7 +449,7 @@
 
     function manageassign(articleid) {
         if (confirm('Are you sure you want to Manage?')) {
-            window.location.href = `http://127.0.0.1:5500/users/manageassign/${articleid}`
+            window.location.href = `http://localhost:81/demo/users/manageassign/${articleid}`
         }
     }   
 
@@ -456,7 +457,7 @@
 
     
     function manageassign(articleid) {
-        fetch(`http://127.0.0.1:5500/users/manageassign/${articleid}`)
+        fetch(`http://localhost:81/demo/users/manageassign/${articleid}`)
             .then(response => response.text())
             .then(html => {
                 document.getElementById('manageassingarticle').innerHTML = html;
